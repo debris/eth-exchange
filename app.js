@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config/config');
+var solidityBridge = require('./services/solidityBridge');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -66,5 +67,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// setup solidity bridge
+solidityBridge.setup();
 
 module.exports = app;

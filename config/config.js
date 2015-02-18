@@ -9,6 +9,10 @@ var config = {
     production: {
         port: process.env.PORT || 3000,
         db: 'mongodb://' + mongoHost + '/eth-exchage-production'
+    },
+    test: {
+        port: process.env.PORT || 3001,
+        db: 'mongodb://' + mongoHost + '/eth-exchage-test'
     }
 };
 
