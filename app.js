@@ -8,8 +8,9 @@ var mongoose = require('mongoose');
 var config = require('./config/config');
 var solidityBridge = require('./services/solidityBridge');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var appRoutes = require('./routes/app');
+var adminRoutes = require('./routes/admin');
+var staticRoutes = require('./routes/static');
 
 // setup db
 mongoose.connect(config.db);
@@ -22,7 +23,10 @@ db.on('error', function () {
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', [
+    path.join(__dirname, 'views'),
+    path.join(__dirname, 'public', 'javascripts'),
+]);
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -32,9 +36,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', appRoutes);
+app.use('/admin', adminRoutes);
+app.use('/static', staticRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
