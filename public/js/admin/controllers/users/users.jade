@@ -1,0 +1,4 @@
+h3 Users
+ul
+    li(ng-repeat='user in users')
+        a(ui-sref='index.user({id: user.identity})') {{user.name}}

@@ -4,11 +4,14 @@ block styles
 
 block scripts
     script(src='js/admin.js')
+    script(src='js/admin/services/users.js')
     script(src='js/admin/controllers/index/IndexCtrl.js')
+    script(src='js/admin/controllers/user/UserCtrl.js')
+    script(src='js/admin/controllers/users/UsersCtrl.js')
+    script(src='js/admin/controllers/settings/SettingsCtrl.js')
 
 block content
     div(ng-app='eth.Exchange.admin')
-        h1= title
-        p Welcome to #{title}
+        h1 Welcome to #{title}
         div(ui-view='main')
 

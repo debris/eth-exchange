@@ -1,2 +1,6 @@
 div
-    h1 hello admin!
+    a(ui-sref='index.users') Users
+    span &nbsp;
+    a(ui-sref='index.settings') Settings
+    div(ui-view='content')
+
