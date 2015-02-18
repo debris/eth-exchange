@@ -1,5 +1,7 @@
 extends layout
 
+block styles
+
 block scripts
     script(src='javascripts/app.js')
     script(src='javascripts/app/controllers/index/IndexCtrl.js')
@@ -9,3 +11,4 @@ block content
         h1= title
         p Welcome to #{title}
         div(ui-view='main')
+

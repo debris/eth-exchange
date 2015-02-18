@@ -1,0 +1,14 @@
+extends layout
+
+block styles
+
+block scripts
+    script(src='javascripts/admin.js')
+    script(src='javascripts/admin/controllers/index/IndexCtrl.js')
+
+block content
+    div(ng-app='eth.Exchange.admin')
+        h1= title
+        p Welcome to #{title}
+        div(ui-view='main')
+
