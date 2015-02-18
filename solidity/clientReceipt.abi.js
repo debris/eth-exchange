@@ -1,5 +1,16 @@
 var ClientReceipt = function () {
     return [{
+        name: 'nominate',
+        type: 'function',
+        inputs: [{
+            name: '_keyholder',
+            type: 'address'
+        }, {
+            name: '_executive',
+            type: 'address'
+        }],
+        outputs: []
+    }, {
         name: 'open',
         type: 'function',
         inputs: [],
@@ -29,22 +40,64 @@ var ClientReceipt = function () {
         outputs: []
     }, {
         name: 'NomineesChanged',
-        type: 'event'
+        type: 'event',
+        inputs: [{
+            name: 'keyholder',
+            type: 'address'
+        }, {
+            name: 'executive',
+            type: 'address'
+        }]
     }, {
         name: 'BoxOpened',
-        type: 'event'
+        type: 'event',
+        inputs: []
     }, {
         name: 'AnonymousDeposit',
-        type: 'event'
+        type: 'event',
+        inputs: [{
+            name: '_from',
+            type: 'address'
+        }, {
+            name: '_value',
+            type: 'uint'
+        }]
     }, {
         name: 'Deposit',
-        type: 'event'
+        type: 'event',
+        inputs: [{
+            name: '_from',
+            type: 'address'
+        }, {
+            name: '_id',
+            type: 'hash'
+        }, {
+            name: '_value',
+            type: 'uint'
+        }]
     }, {
         name: 'Refill',
-        type: 'event'
+        type: 'event',
+        inputs: [{
+            name: '_from',
+            type: 'address'
+        }, {
+            name: '_value',
+            type: 'uint'
+        }]
     }, {
         name: 'Transfer',
-        type: 'event'
+        type: 'event',
+        inputs: [{
+            name: '_from',
+            type: 'address'
+        }, {
+            name: '_to',
+            type: 'address'
+        }, {
+            name: '_value',
+            type: 'uint'
+        }]
     }];
 };
 
