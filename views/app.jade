@@ -5,10 +5,11 @@ block styles
 block scripts
     script(src='javascripts/app.js')
     script(src='javascripts/app/controllers/index/IndexCtrl.js')
+    script(src='javascripts/app/controllers/deposit/DepositCtrl.js')
+    script(src='javascripts/app/controllers/withdraw/WithdrawCtrl.js')
 
 block content
     div(ng-app='eth.Exchange.app')
-        h1= title
-        p Welcome to #{title}
+        h1 Welcome to #{title}
         div(ui-view='main')
 
