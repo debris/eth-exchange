@@ -25,7 +25,7 @@ var app = express();
 // view engine setup
 app.set('views', [
     path.join(__dirname, 'views'),
-    path.join(__dirname, 'public', 'javascripts'),
+    path.join(__dirname, 'public', 'js'),
 ]);
 app.set('view engine', 'jade');
 
