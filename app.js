@@ -11,6 +11,8 @@ var solidityBridge = require('./services/solidityBridge');
 var appRoutes = require('./routes/app');
 var adminRoutes = require('./routes/admin');
 var staticRoutes = require('./routes/static');
+var appApi = require('./routes/appApi');
+var adminApi = require('./routes/adminApi');
 
 // setup db
 mongoose.connect(config.db);
@@ -37,9 +39,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// remove trailing slash
+app.use( function(req, res, next) {
+    if (req.path.substr(-1) == '/' && req.path.length > 1) {
+        var query = req.url.slice(req.path.length);
+        res.redirect(301, req.path.slice(0, -1) + query);
+    } else {
+        next();
+    }
+});
+
 app.use('/', appRoutes);
 app.use('/admin', adminRoutes);
 app.use('/static', staticRoutes);
+app.use('/api/app', appApi);
+app.use('/api/admin', adminApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,20 +1,6 @@
-angular.module('eth.Exchange.admin').service('users', [function () {
-    var getAll = function () {
-        return [
-            { name: 'Marek', identity: 0 },
-            { name: 'Adam', identity: 1 }
-        ];
-    };
-
-    var get = function (id) {
-        return getAll().filter(function (user) {
-            return user.identity === id;
-        })[0];
-    };
-
-    return {
-        getAll: getAll,
-        get: get
-    };
+angular.module('eth.Exchange.admin').factory('users', ['Restangular', function (Restangular) {
+    // based on
+    // https://github.com/mgonto/restangular#decoupled-restangular-service
+    return Restangular.service('users');
 }]);
 

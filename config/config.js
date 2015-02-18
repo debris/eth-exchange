@@ -4,15 +4,15 @@ var mongoHost = process.env.MONGO_HOST || 'localhost';
 var config = {
     develop: {
         port: process.env.PORT || 2000,
-        db: 'mongodb://' + mongoHost + '/eth-exchage-develop'
+        db: 'mongodb://' + mongoHost + '/eth-exchange-develop'
     },
     production: {
         port: process.env.PORT || 3000,
-        db: 'mongodb://' + mongoHost + '/eth-exchage-production'
+        db: 'mongodb://' + mongoHost + '/eth-exchange-production'
     },
     test: {
         port: process.env.PORT || 3001,
-        db: 'mongodb://' + mongoHost + '/eth-exchage-test'
+        db: 'mongodb://' + mongoHost + '/eth-exchange-test'
     }
 };
 
