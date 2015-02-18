@@ -5,7 +5,7 @@ var User = require('../models/user');
 var onError = function (res) {
     return function (err) {
         console.error(err);
-        res.send(err);
+        res.send(500, err);
     };
 };
 
@@ -15,8 +15,8 @@ router.get('/users', function (req, res, next) {
     }, onError(res));
 });
 
-router.get('/users/:identity', function (req, res, next) {
-    return User.findOne({identity: identity}).exec().then(function (user) {
+router.get('/users/:id', function (req, res, next) {
+    return User.findOne({_id: req.params.id}).exec().then(function (user) {
         res.send(200, user);
     }, onError(res));
 });
@@ -27,8 +27,8 @@ router.post('/users', function (req, res, next) {
     }, onError(res));
 });
 
-router.put('/users/:identity', function (req, res, next) {
-    return User.findOneAndUpdate({identity: identity}, req.body).exec().then(function () {
+router.put('/users/:id', function (req, res, next) {
+    return User.findOneAndUpdate({_id: req.params.id}, req.body).exec().then(function () {
         res.send(200);
     }, onError(res));
 });

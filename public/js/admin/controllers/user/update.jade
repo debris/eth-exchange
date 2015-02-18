@@ -1,0 +1,13 @@
+h3 Edit User
+form(name='uditUser', ng-submit='save()')
+    div
+        label Name
+        span &nbsp;
+        input(ng-model='update.user.name', name='name', type='text')
+    div 
+        label Identity
+        span &nbsp;
+        input(ng-model='update.user.identity', name='identity', type='text')
+    div
+        input(type='submit', value='Submit')
+

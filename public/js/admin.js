@@ -45,6 +45,16 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
         }
     });
 
+    $stateProvider.state('index.updateUser', {
+        url: '/updateUser/:create/:id',
+        views: {
+            content: {
+                templateUrl: '/static/admin/controllers/user/update.jade',
+                controller: 'UpdateUserCtrl'
+            }
+        }
+    });
+
     $urlRouterProvider.otherwise('');
 }]);
 
