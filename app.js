@@ -4,9 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var config = require('./config/config');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+// setup db
+mongoose.connect(config.db);
+var db = mongoose.connection;
+db.on('error', function () {
+    throw new Error('unable to connect to database at ' + config.db);
+});
+
 
 var app = express();
 
