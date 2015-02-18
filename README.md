@@ -7,3 +7,24 @@
 [coveralls-image]: https://coveralls.io/repos/debris/eth-exchange/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/r/debris/eth-exchange?branch=master
 
+## Prerequisites
+
+* node
+* npm
+* mongodb
+
+## Installation
+
+```bash
+git clone https://github.com/debris/eth-exchange
+cd eth-exchange
+npm install
+```
+
+## Run
+
+```bash
+mongod &
+npm start
+```
+
