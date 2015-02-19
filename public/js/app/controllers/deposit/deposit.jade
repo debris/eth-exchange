@@ -1,1 +1,14 @@
 h3 Deposit
+div
+    form(name='depositForm', ng-submit='confirm()')
+        pre FROM:
+            select(ng-model='deposit.selected', ng-options='account.address for account in deposit.accounts')
+                option(value='') -- chose account --
+            span &nbsp;
+            | BALANCE: {{deposit.selected.balance}}
+        pre VALUE:
+            input(ng-model='deposit.value', name='value', type='number')
+            span &nbsp;
+            | Wei
+        input(type='submit', value='Submit')
+

@@ -46,6 +46,25 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
         }
     });
 
+    $stateProvider.state('index.thanks', {
+        url: '/thanks',
+        views: {
+            content: {
+                templateUrl: '/static/app/controllers/thanks/thanks'
+            }
+        }
+    });
+    
+    $stateProvider.state('index.history', {
+        url: '/history',
+        views: {
+            content: {
+                templateUrl: '/static/app/controllers/history/history',
+                controller: 'HistoryCtrl'
+            }
+        }
+    });
+
     $urlRouterProvider.otherwise('');
 }]);
 

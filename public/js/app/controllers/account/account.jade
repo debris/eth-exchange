@@ -1,6 +1,5 @@
 h3 Account
 div
-    //p choose account:
     select(ng-model='account.user', ng-options='user.identity for user in account.users')
         option(value='') -- choose account --
 
@@ -9,11 +8,15 @@ div
     pre IDENTITY: {{account.user.identity}}
     pre EXCHANGE BALANCE: {{account.user.balance}}
     pre YOUR ACCOUNTS
-    table(style='width: 100%;')
+    table
         tr
-            th Address
-            th Balance
+            th
+                pre ADDRESS
+            th 
+                pre BALANCE
         tr(ng-repeat='acc in account.accounts')
-            td {{acc.address}}
-            td {{acc.balance}}
+            td 
+                pre {{acc.address}}
+            td 
+                pre {{acc.balance}}
 
