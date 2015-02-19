@@ -5,13 +5,24 @@ html
         link(rel='stylesheet', href='/stylesheets/style.css')
         block styles
 
+        //- angular
         script(src='bower/angular/angular.js')
+
+        //- angular-ui-router
         script(src='bower/angular-ui-router/release/angular-ui-router.js')
+
+        //- restangular and it's dependencies (we do not use lodash separately yet. alter this if we will)
         script(src='bower/lodash/dist/lodash.js')
         script(src='bower/restangular/dist/restangular.js')
 
+        //- ethereum.js and it's dependencies
+        script(src='bower/bignumber.js/bignumber.js')
+        script(src='bower/ethereum.js/dist/ethereum.js')
+
+        //- our utils
         script(src='js/utils.js')
         script(src='js/utils/services/users.js')
+        script(src='js/utils/services/ethereum.js')
         block scripts
 
     body

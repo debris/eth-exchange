@@ -8,6 +8,13 @@ div
 div
     h5 NAME: {{account.user.name}}
     h5 IDENTITY: {{account.user.identity}}
-    h5 BALANCE: {{account.user.balance}}
+    h5 EXCHANGE BALANCE: {{account.user.balance}}
+    h5 YOUR ACCOUNTS
+    ul
+        li(ng-repeat='acc in account.accounts')
+            span {{acc.address}} 
+            span &nbsp;
+            span {{acc.balance}}
+            
 
 
