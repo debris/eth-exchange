@@ -5,15 +5,15 @@ div
         option(value='') -- choose account --
 
 div
-    p NAME: {{account.user.name}}
-    p IDENTITY: {{account.user.identity}}
-    p EXCHANGE BALANCE: {{account.user.balance}}
-    p YOUR ACCOUNTS
-    ul
-        li(ng-repeat='acc in account.accounts')
-            span {{acc.address}} 
-            span &nbsp;
-            span {{acc.balance}}
-            
-
+    pre NAME: {{account.user.name}}
+    pre IDENTITY: {{account.user.identity}}
+    pre EXCHANGE BALANCE: {{account.user.balance}}
+    pre YOUR ACCOUNTS
+    table(style='width: 100%;')
+        tr
+            th Address
+            th Balance
+        tr(ng-repeat='acc in account.accounts')
+            td {{acc.address}}
+            td {{acc.balance}}
 

@@ -24,12 +24,5 @@ angular.module('eth.Exchange.app').controller('AccountCtrl', ['$scope', 'users',
     });
 
     $scope.account.accounts = accounts();
-
-    //$scope.account.accounts = web3.eth.accounts.map(function (address) {
-        //return {
-            //address: address,
-            //balance: web3.toDecimal(web3.eth.balanceAt(address))
-        //};
-    //});
 }]);
 
