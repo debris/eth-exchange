@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Operation = require('../models/operation');
+
+var models = {
+    users: User,
+    operations: Operation
+};
 
 var onError = function (res) {
     return function (err) {
@@ -9,30 +15,50 @@ var onError = function (res) {
     };
 };
 
-router.get('/users', function (req, res, next) {
-    return User.find({}).exec().then(function (users) {
-        res.send(200, users);
+router.get('/:model', function (req, res, next) {
+    var model = models[req.params.model];
+    if (!model) {
+        res.send(400);
+        return;
+    }
+    return model.find({}).exec().then(function (objects) {
+        res.send(200, objects);
     }, onError(res));
 });
 
-router.get('/users/:key/:id', function (req, res, next) {
+router.get('/:model/:key/:id', function (req, res, next) {
+    var model = models[req.params.model];
+    if (!model) {
+        res.send(400);
+        return;
+    }
     var conditions = {};
     conditions[req.params.key] = req.params.id;
-    return User.findOne(conditions).exec().then(function (user) {
-        res.send(200, user);
+    return model.findOne(conditions).exec().then(function (object) {
+        res.send(200, object);
     }, onError(res));
 });
 
-router.post('/users', function (req, res, next) {
-    return User.create(req.body).then(function () {
+router.post('/:model', function (req, res, next) {
+    var model = models[req.params.model];
+    if (!model) {
+        res.send(400);
+        return;
+    }
+    return model.create(req.body).then(function () {
         res.send(200);
     }, onError(res));
 });
 
-router.post('/users/:key/:id', function (req, res, next) {
+router.post('/:model/:key/:id', function (req, res, next) {
+    var model = models[req.params.model];
+    if (!model) {
+        res.send(400);
+        return;
+    }
     var conditions = {};
     conditions[req.params.key] = req.params.id;
-    return User.findOneAndUpdate(conditions, req.body).exec().then(function () {
+    return model.findOneAndUpdate(conditions, req.body).exec().then(function () {
         res.send(200);
     }, onError(res));
 });
