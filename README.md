@@ -12,6 +12,7 @@
 * node
 * npm
 * mongodb
+* cpp-ethereum
 
 ## Installation
 
@@ -24,7 +25,13 @@ npm install
 ## Run
 
 ```bash
-mongod &
+# start ethereum with json-rpc server
+eth -j
+
+# start mongodb
+mongod
+
+# start eth-exchange
 npm start
 ```
 
