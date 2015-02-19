@@ -1,6 +1,6 @@
 div
-    h3 {{current.user.name}}
-    h5 {{current.user.identity}}
+    h3 NAME: {{current.user.name}}
+    h5 IDENTITY: {{current.user.identity}}
 div
     a(ui-sref='index.updateUser({create: false, id: current.user._id})') Edit
 

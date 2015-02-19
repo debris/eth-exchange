@@ -3,7 +3,7 @@ angular.module('eth.Exchange.admin').controller('UserCtrl', ['$scope', '$statePa
     // fix user reference
     $scope.current = {};
 
-    users.one($stateParams.id).get().then(function (user) {
+    users.one('_id').one($stateParams.id).get().then(function (user) {
         $scope.current.user = user;
     });
 }]);

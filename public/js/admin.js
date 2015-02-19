@@ -1,6 +1,7 @@
 angular.module('eth.Exchange.admin', [
     'ui.router',
-    'restangular'
+    'restangular',
+    'eth.Exchange.utils'
 ]);
 
 angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -56,10 +57,5 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
     });
 
     $urlRouterProvider.otherwise('');
-}]);
-
-angular.module('eth.Exchange.admin').config(['RestangularProvider', function (RestangularProvider) {
-    RestangularProvider.setBaseUrl('api/admin');
-    RestangularProvider.setMethodOverriders(['put']);
 }]);
 

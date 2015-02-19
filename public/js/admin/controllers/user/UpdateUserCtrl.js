@@ -15,12 +15,13 @@ angular.module('eth.Exchange.admin').controller('UpdateUserCtrl', ['$scope', '$s
         };
 
     } else {
-        users.one($stateParams.id).get().then(function (user) {
+        users.one('_id').one($stateParams.id).get().then(function (user) {
             $scope.update.user = user;
         });
 
         $scope.save = function () {
-            $scope.update.user.one($scope.update.user._id).put().then(function () {
+            // OK
+            users.one('_id').post($scope.update.user._id, $scope.update.user).then(function () {
                 $state.go('index.users');
             });
         };

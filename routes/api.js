@@ -15,8 +15,10 @@ router.get('/users', function (req, res, next) {
     }, onError(res));
 });
 
-router.get('/users/:id', function (req, res, next) {
-    return User.findOne({_id: req.params.id}).exec().then(function (user) {
+router.get('/users/:key/:id', function (req, res, next) {
+    var conditions = {};
+    conditions[req.params.key] = req.params.id;
+    return User.findOne(conditions).exec().then(function (user) {
         res.send(200, user);
     }, onError(res));
 });
@@ -27,8 +29,10 @@ router.post('/users', function (req, res, next) {
     }, onError(res));
 });
 
-router.put('/users/:id', function (req, res, next) {
-    return User.findOneAndUpdate({_id: req.params.id}, req.body).exec().then(function () {
+router.post('/users/:key/:id', function (req, res, next) {
+    var conditions = {};
+    conditions[req.params.key] = req.params.id;
+    return User.findOneAndUpdate(conditions, req.body).exec().then(function () {
         res.send(200);
     }, onError(res));
 });

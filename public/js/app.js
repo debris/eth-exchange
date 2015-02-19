@@ -1,5 +1,7 @@
 angular.module('eth.Exchange.app', [
-    'ui.router'
+    'ui.router',
+    'restangular',
+    'eth.Exchange.utils'
 ]);
 
 angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -12,7 +14,17 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
                 controller: 'IndexCtrl'
             }
         } 
-    });    
+    }); 
+
+    $stateProvider.state('index.account', {
+        url: '/account',
+        views: {
+            content: {
+                templateUrl: '/static/app/controllers/account/account',
+                controller: 'AccountCtrl'
+            }
+        }
+    });
 
     $stateProvider.state('index.deposit', {
         url: '/deposit',

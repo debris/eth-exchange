@@ -1,0 +1,13 @@
+h3 Account
+div
+    h5 Change account:
+    form(name='change', ng-submit='changeAccount()')
+        div
+            input(ng-model='account.identity', name='identity', type='text')
+            input(type='submit', value='Change')
+div
+    h5 NAME: {{account.user.name}}
+    h5 IDENTITY: {{account.user.identity}}
+    h5 BALANCE: {{account.user.balance}}
+
+

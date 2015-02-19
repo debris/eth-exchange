@@ -11,8 +11,7 @@ var solidityBridge = require('./services/solidityBridge');
 var appRoutes = require('./routes/app');
 var adminRoutes = require('./routes/admin');
 var staticRoutes = require('./routes/static');
-var appApi = require('./routes/appApi');
-var adminApi = require('./routes/adminApi');
+var api = require('./routes/api');
 
 // setup db
 mongoose.connect(config.db);
@@ -52,8 +51,7 @@ app.use( function(req, res, next) {
 app.use('/', appRoutes);
 app.use('/admin', adminRoutes);
 app.use('/static', staticRoutes);
-app.use('/api/app', appApi);
-app.use('/api/admin', adminApi);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
