@@ -1,28 +1,35 @@
-angular.module('eth.Exchange.app').controller('AccountCtrl', ['$scope', 'users', 'web3', function ($scope, users, web3) {
+/**
+ *  Displays account information
+ *  To simplify poc, enables user to change account
+ *  Current account identity is stored in localstorage
+ */
+angular.module('eth.Exchange.app').controller('AccountCtrl', ['$scope', 'users', 'accounts', function ($scope, users, accounts) {
    
     $scope.account = {}; 
-   
-    // temprary
-    $scope.account.identity = localStorage.identity;
 
-    var reloadAccount = function () {
-        users.one('identity').one($scope.account.identity).get().then(function (user) {
-            $scope.account.user = user;
-        }); 
-    };
-
-    reloadAccount();
-
-    $scope.changeAccount = function () {
-        localStorage.identity = $scope.account.identity;
-        reloadAccount();
-    };
-
-    $scope.account.accounts = web3.eth.accounts.map(function (address) {
-        return {
-            address: address,
-            balance: web3.toDecimal(web3.eth.balanceAt(address))
-        };
+    users.getList().then(function (users) {
+        $scope.account.users = users;
+        var identity = localStorage.identity;
+        $scope.account.user = users.filter(function (user) {
+            return user.identity == identity;
+        })[0];
     });
+   
+    $scope.$watch('account.user', function () {
+        if (!$scope.account.user) {
+            return;
+        }
+
+        localStorage.identity = $scope.account.user.identity;
+    });
+
+    $scope.account.accounts = accounts();
+
+    //$scope.account.accounts = web3.eth.accounts.map(function (address) {
+        //return {
+            //address: address,
+            //balance: web3.toDecimal(web3.eth.balanceAt(address))
+        //};
+    //});
 }]);
 
