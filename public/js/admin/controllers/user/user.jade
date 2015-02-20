@@ -1,6 +1,8 @@
 div
-    h3 NAME: {{current.user.name}}
-    h5 IDENTITY: {{current.user.identity}}
+    pre NAME: {{current.user.name}}
+    pre IDENTITY: {{current.user.identity}}
+    pre WALLET ADDRESS: {{current.user.address}}
+    pre EXCHANGE BALANCE: {{current.user.balance}}
 div
     a(ui-sref='index.updateUser({create: false, id: current.user._id})') Edit
 

@@ -5,7 +5,7 @@ var config = {
     develop: {
         port: process.env.PORT || 2000,
         db: 'mongodb://' + mongoHost + '/eth-exchange-develop',
-        mockEth: true 
+        mockEth: false 
     },
     production: {
         port: process.env.PORT || 3000,
