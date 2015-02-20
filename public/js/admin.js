@@ -25,6 +25,16 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
             }
         }
     });
+    $stateProvider.state('index.wallets', {
+        url: '/wallets',
+        views: {
+            content: {
+                templateUrl: '/static/admin/controllers/wallets/wallets.jade',
+                controller: 'WalletsCtrl'
+            }
+        }
+    });
+
 
     $stateProvider.state('index.user', {
         url: '/user/:id',

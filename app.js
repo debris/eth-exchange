@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('./config/config');
+var wallet = require('./config/wallet');
 var solidityBridge = require('./services/solidityBridge');
 
 var appRoutes = require('./routes/app');
@@ -16,6 +17,13 @@ var api = require('./routes/api');
 // setup db
 mongoose.connect(config.db);
 var db = mongoose.connection;
+
+db.on('open', function () {
+    wallet.setup().then(function (wallet){
+        console.log('exchnage wallet address: ' + wallet.address);
+    })
+});
+
 db.on('error', function () {
     throw new Error('unable to connect to database at ' + config.db);
 });

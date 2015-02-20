@@ -3,11 +3,21 @@ extends layout
 block styles
 
 block scripts
+
+    //- out main ng-app
     script(src='js/admin.js')
+
+    //- include mockable services
+
+    //- include services
+    script(src='js/admin/services/wallets.js')
+
+    //- include controllers
     script(src='js/admin/controllers/index/IndexCtrl.js')
     script(src='js/admin/controllers/user/UserCtrl.js')
     script(src='js/admin/controllers/user/UpdateUserCtrl.js')
     script(src='js/admin/controllers/users/UsersCtrl.js')
+    script(src='js/admin/controllers/wallets/WalletsCtrl.js')
     script(src='js/admin/controllers/settings/SettingsCtrl.js')
 
 block content

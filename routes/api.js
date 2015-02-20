@@ -2,11 +2,13 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Operation = require('../models/operation');
+var Wallet = require('../models/wallet');
 var contract = require('../services/contract');
 
 var models = {
     users: User,
-    operations: Operation
+    operations: Operation,
+    wallets: Wallet
 };
 
 var onError = function (res) {
