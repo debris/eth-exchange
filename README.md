@@ -37,6 +37,21 @@ npm install
 
 ## Run
 
+### Running in ArchLinux
+```bash
+# start ethereum with json-rpc server
+# by default port 8080
+eth -j
+
+# make sure mongodb is running
+sudo systemctl start mongodb.service
+
+# start eth-exchange
+# by default port 2000, configurable in config.js
+npm start
+```
+
+### Running in Debian based distros / Macosx
 ```bash
 # start ethereum with json-rpc server
 # by default port 8080
