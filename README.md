@@ -26,12 +26,18 @@ npm install
 
 ```bash
 # start ethereum with json-rpc server
+# by default port 8080
 eth -j
 
 # start mongodb
 mongod
 
 # start eth-exchange
+# by default port 2000, configurable in config.js
 npm start
 ```
+
+## Configuration
+
+Exchange configuration can be found in [config/config.js](https://github.com/debris/eth-exchange/blob/master/config/config.js).
 
