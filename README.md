@@ -69,3 +69,15 @@ npm start
 
 Exchange configuration can be found in [config/config.js](https://github.com/debris/eth-exchange/blob/master/config/config.js).
 
+## Debug
+
+You can debug node app using node-inspector
+
+```bash
+# install node-inspector globally
+npm install -g node-inspector
+
+# start node-inspector at port 7000
+node-debug -p 7000 bin/www
+```
+
