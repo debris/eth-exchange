@@ -16,6 +16,19 @@
 
 ## Installation
 
+
+### Addendum for ArchLinux
+Make sure you have node.js and mongodb. You can get them via pacman with
+```sudo pacman -S nodejs mongodb```
+
+If you are getting problems at `npm install` due to `gyp` then use:
+```npm config set python /usr/bin/python2.7 -g```
+
+This way npm (and gyp) will know which version of python to use and not use python 3
+which is the ArchLinux default.
+
+### General Installation Command
+
 ```bash
 git clone https://github.com/debris/eth-exchange
 cd eth-exchange
