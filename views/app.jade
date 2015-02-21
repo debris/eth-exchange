@@ -7,6 +7,9 @@ block scripts
     //- out main ng-app
     script(src='js/app.js')
 
+    //- include services
+    script(src='js/app/services/currentUser.js')
+
     //- include mockable services
     if mockEth
         script(src='js/app/services/accounts/accounts_mock.js')

@@ -45,6 +45,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'shared')));
 
 // remove trailing slash
 app.use( function(req, res, next) {
@@ -96,3 +97,4 @@ app.use(function(err, req, res, next) {
 solidityBridge.setup();
 
 module.exports = app;
+

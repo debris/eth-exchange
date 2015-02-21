@@ -4,7 +4,7 @@ var Q = require('q');
 var web3 = require('./ethereum/web3');
 
 var load = function (file) {
-    return Q.ninvoke(fs, 'readFile', path.join(path.dirname(__dirname), 'solidity', file)).then(function (data) {
+    return Q.ninvoke(fs, 'readFile', path.join(path.dirname(__dirname), 'shared', 'solidity', file)).then(function (data) {
         return data.toString();
     });
 };

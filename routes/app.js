@@ -7,10 +7,7 @@ router.get('/', function(req, res, next) {
     console.log(config);
     res.render('app', { 
         title: 'EthExchange',
-        mockEth: config.mockEth,
-        // inject ethereum host to browser
-        // TODO: we might want to remove this, in future
-        eth: config.eth 
+        mockEth: config.mockEth
     });
 });
 
