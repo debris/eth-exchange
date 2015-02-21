@@ -49,7 +49,7 @@ router.post('/users', function (req, res, next) {
         users.forEach(function (user) {
             // TODO: optimize loading contracts, if we really will to create multiple users
             // TODO: if contract creation fails, user should not be created
-            contract.newContract('clientReceipt.sol').then(function (address) {
+            contract.createNewContract('ClientReceipt').then(function (address) {
                 user.address = address; 
                 user.markModified('address');
                 user.save();
