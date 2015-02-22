@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var mongoose = require('mongoose');
 var config = require('./config/config');
 var wallet = require('./config/wallet');
@@ -57,6 +58,12 @@ app.use( function(req, res, next) {
         next();
     }
 });
+
+app.use(session({ 
+    secret: 'to the moon',
+    resave: true,
+    saveUninitialized: true
+}));
 
 passportConfig(app);
 

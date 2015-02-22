@@ -7,7 +7,7 @@ var authenticateUser = function (req, res, next) {
 };
 
 var authenticateWithRedirect = function (req, res, next) {
-    if (!res.user) {
+    if (!req.user) {
         return res.redirect('/login');
     }
     next();
