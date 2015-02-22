@@ -4,6 +4,7 @@ var User = require('../models/user');
 var Operation = require('../models/operation');
 var Wallet = require('../models/wallet');
 var contract = require('../services/contract');
+var auth = require('../services/auth');
 
 var models = {
     users: User,
@@ -18,7 +19,7 @@ var onError = function (res) {
     };
 };
 
-router.get('/:model', function (req, res, next) {
+router.get('/:model', auth.authenticateUser, function (req, res, next) {
     var model = models[req.params.model];
     if (!model) {
         res.send(400);

@@ -13,13 +13,8 @@ var authenticateWithRedirect = function (req, res, next) {
     next();
 };
 
-var onSuccessfullAuth = function (req, res) {
-    res.send(200);
-};
-
 module.exports = {
     authenticateUser: authenticateUser,
-    authenticateWithRedirect: authenticateWithRedirect,
-    onSuccessfullAuth: onSuccessfullAuth
+    authenticateWithRedirect: authenticateWithRedirect
 };
 
