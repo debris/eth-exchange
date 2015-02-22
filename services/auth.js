@@ -13,8 +13,20 @@ var authenticateWithRedirect = function (req, res, next) {
     next();
 };
 
+var loginRedirects = {
+    successRedirect: '/',
+    failureRedirect: '/login'
+};
+
+var registerRedirects = {
+    successRedirect: '/',
+    failureRedirect: '/register'
+};
+
 module.exports = {
     authenticateUser: authenticateUser,
-    authenticateWithRedirect: authenticateWithRedirect
+    authenticateWithRedirect: authenticateWithRedirect,
+    loginRedirects: loginRedirects,
+    registerRedirects: registerRedirects
 };
 

@@ -11,6 +11,7 @@ var wallet = require('./config/wallet');
 var solidityBridge = require('./services/solidityBridge');
 var passportConfig = require('./config/passport');
 
+var authRoutes = require('./routes/auth');
 var appRoutes = require('./routes/app');
 var adminRoutes = require('./routes/admin');
 var staticRoutes = require('./routes/static');
@@ -68,6 +69,7 @@ app.use(session({
 passportConfig(app);
 
 app.use('/', appRoutes);
+app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
 app.use('/static', staticRoutes);
 app.use('/api', api);

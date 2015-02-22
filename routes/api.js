@@ -30,7 +30,7 @@ router.get('/:model', auth.authenticateUser, function (req, res, next) {
     }, onError(res));
 });
 
-router.get('/:model/:key/:id', function (req, res, next) {
+router.get('/:model/:key/:id', auth.authenticateUser, function (req, res, next) {
     var model = models[req.params.model];
     if (!model) {
         res.send(400);
@@ -43,7 +43,7 @@ router.get('/:model/:key/:id', function (req, res, next) {
     }, onError(res));
 });
 
-router.post('/users', function (req, res, next) {
+router.post('/users', auth.authenticateUser, function (req, res, next) {
     return User.create(req.body).then(function () {
         // because it is possible to create multiple models at once, we need to handle them
         var users = Array.prototype.slice.call(arguments);
@@ -60,7 +60,7 @@ router.post('/users', function (req, res, next) {
     }, onError(res));
 });
 
-router.post('/:model', function (req, res, next) {
+router.post('/:model', auth.authenticateUser, function (req, res, next) {
     var model = models[req.params.model];
     if (!model) {
         res.send(400);
@@ -72,7 +72,7 @@ router.post('/:model', function (req, res, next) {
     }, onError(res));
 });
 
-router.post('/:model/:key/:id', function (req, res, next) {
+router.post('/:model/:key/:id', auth.authenticateUser, function (req, res, next) {
     var model = models[req.params.model];
     if (!model) {
         res.send(400);
