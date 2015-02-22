@@ -1,0 +1,23 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+
+    body
+        h1 Log in to #{title}
+        div 
+            a(href='/login') Login
+            span &nbsp;
+            a(href='/register') Register
+        div
+            h3 Login
+            form(action='/auth/register', method='post')
+                div
+                    input(name='email', type='email')
+                div
+                    input(name='confirm_email', type='email')
+                div
+                    input(name='password', type='password')
+                button(type='submit') Log In
+

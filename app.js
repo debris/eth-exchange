@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var config = require('./config/config');
 var wallet = require('./config/wallet');
 var solidityBridge = require('./services/solidityBridge');
+var passportConfig = require('./config/passport');
 
 var appRoutes = require('./routes/app');
 var adminRoutes = require('./routes/admin');
@@ -56,6 +57,8 @@ app.use( function(req, res, next) {
         next();
     }
 });
+
+passportConfig(app);
 
 app.use('/', appRoutes);
 app.use('/admin', adminRoutes);
