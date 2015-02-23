@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
-var extension = require('./extensions/user');
+var encryptPassword = require('./extensions/encryptPassword');
+var createIdentity = require('./extensions/createIdentity');
 
 /**
  * User is used to store exchange related data about user
@@ -28,8 +29,8 @@ var User = new mongoose.Schema({
     }
 });
 
-User.pre('save', extension.encryptPassword);
-User.pre('save', extension.createIdentity);
+User.pre('save', encryptPassword);
+User.pre('save', createIdentity);
 
 module.exports = mongoose.model('user', User);
 
