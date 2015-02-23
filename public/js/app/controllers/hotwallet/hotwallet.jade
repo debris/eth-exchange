@@ -1,0 +1,12 @@
+h3 HotWallet
+div
+    pre WALLET NAME: {{hotwallet.user.wallet.name}}
+    pre WALLET ADDRESS: {{hotwallet.user.wallet.address}}
+    pre ----
+    pre CHANGE WALLET:
+    form(name='hotwalletForm', ng-submit='changeHotwallet()')
+        pre name:
+            select(ng-model='hotwallet.selected', ng-options='contract for contract in hotwallet.contracts')
+                option(value='') -- chose hotwallet contract --
+            span &nbsp;
+        input(type='submit', value='Change')

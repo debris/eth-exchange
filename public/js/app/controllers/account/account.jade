@@ -1,13 +1,11 @@
 h3 Account
-div
-    select(ng-model='account.user', ng-options='user.identity for user in account.users')
-        option(value='') -- choose account --
 
 div
+    pre EMAIL: {{account.user.email}}
     pre NAME: {{account.user.name}}
     pre IDENTITY: {{account.user.identity}}
     pre EXCHANGE BALANCE: {{account.user.balance}}
-    pre WALLET ADDRESS: {{account.user.address}}
+    pre WALLET ADDRESS: {{account.user.wallet.address}}
     pre WALLET BALANCE: {{account.hotWalletBalance}}
     pre YOUR ACCOUNTS
     table

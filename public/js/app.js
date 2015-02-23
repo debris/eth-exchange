@@ -25,6 +25,16 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
             }
         }
     });
+    
+    $stateProvider.state('index.hotwallet', {
+        url: '/hotwallet',
+        views: {
+            content: {
+                templateUrl: '/static/app/controllers/hotwallet/hotwallet',
+                controller: 'HotwalletCtrl'
+            }
+        }
+    });
 
     $stateProvider.state('index.deposit', {
         url: '/deposit',

@@ -3,29 +3,21 @@
  * Depends on localStorage, users
  * Should be used to get/set identity of current user or to get currentUser
  */
-angular.module('eth.Exchange.app').service('currentUser', ['localStorage', 'users', function (localStorage, users) {
+angular.module('eth.Exchange.app').service('currentUser', ['$http', function ($http) {
     
-    var getIdentity = function () {
-        return localStorage.identity;
-    };
-
-    var setIdentity = function (identity) {
-        localStorage.identity = identity;
-    };
-
     var get = function () {
-        var identity = localStorage.identity;
-        return users.getList().then(function (list) {
-            return list.filter(function (user) {
-                return user.identity == identity;
-            })[0];
-        });
+        return $http.get('/api/user');
     };
+
+    var changeHotwallet = function (address, name) {
+        return $http.post('/api/user/setWallet', {
+            address: address,
+            name: name
+        });
+    }; 
 
     return {
-        getIdentity: getIdentity,
-        setIdentity: setIdentity,
-        get: get 
+        get: get
     }; 
 }]);
 
