@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
-var Q = require('q');
-var bcrypt = require('bcryptjs');
-var SALT_WORK_FACTOR = 10;
+var extension = require('./extensions/user');
 
 /**
  * User is used to store exchange related data about user
@@ -24,25 +22,8 @@ var User = new mongoose.Schema({
     }
 });
 
-/**
- * Extend User model to automatically hash password before save
- */
-User.pre('save', function (next) {
-    var user = this;
-    if (!user.isModified('password') || !user.password) {
-        return next();
-    }
-    
-    return Q.ninvoke(bcrypt, 'genSalt', SALT_WORK_FACTOR).then(function (salt) {
-        return Q.ninvoke(bcrypt, 'hash', user.password, salt);
-    }).then(function (hash) {
-        user.password = hash;
-        next();
-    }).catch(function (err) {
-        console.error(err);
-        next(err);
-    }).done();
-});
+User.pre('save', extension.encryptPassword);
+User.pre('save', extension.createIdentity);
 
 module.exports = mongoose.model('user', User);
 
