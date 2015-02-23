@@ -7,6 +7,7 @@ var extension = require('./extensions/user');
  * password - encrypted user password
  * name - is display name of the user, by default it's user's email
  * identity - exchange identity of the user, should be used to deposit funds
+ * assets - number exchange assets owned by user
  * wallet.address - blockchain address of user hot wallet
  * wallet.name - contract name of user's wallet (eg. ClientReceipt, Custom)
  * balance - total balance of user funds stored in hot and cold wallet together, in hex
@@ -16,6 +17,7 @@ var User = new mongoose.Schema({
     password: String,
     name: String,
     identity: String,
+    assets: Number,
     wallet: {
         address: String,
         name: String
