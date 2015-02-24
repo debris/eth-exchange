@@ -17,7 +17,8 @@ angular.module('eth.Exchange.app').service('currentUser', ['$http', function ($h
     }; 
 
     return {
-        get: get
+        get: get,
+        changeHotwallet: changeHotwallet
     }; 
 }]);
 

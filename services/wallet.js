@@ -1,5 +1,4 @@
 var contracts = require('./contracts');
-var exchange = require('./wallet');
 var web3 = require('./ethereum/web3');
 
 var watchWalletTransfer = function (wallet, address, value) {
@@ -40,7 +39,7 @@ var transferFromWallet = function (walletAddress, to, value) {
 var transferToWallet = function (walletAddress, from, value) {
     return contracts.getInterface(walletAddress, 'ClientReceipt').then(function (wallet) {
         var watch = watchWalletDeposit(wallet, from, value);
-        web3.eth.transact({from: exchangeWallet.address, to: walletAddress, value: value});
+        web3.eth.transact({from: from, to: walletAddress, value: value});
         return watch;
     });
 };

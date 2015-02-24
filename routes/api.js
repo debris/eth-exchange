@@ -5,12 +5,14 @@ var auth = require('../services/auth');
 var users = require('../controllers/users');
 var contracts = require('../controllers/contracts');
 var assets = require('../controllers/assets');
+var exchange = require('../controllers/exchange');
 var generic = require('../controllers/generic');
 
 router.get('/contracts', auth.authenticateUser, contracts.list);
 router.get('/contracts/:name', auth.authenticateUser, contracts.get);
 router.get('/user', auth.authenticateUser, users.current);
 router.post('/user/setWallet', auth.authenticateUser, users.setWallet);
+router.get('/exchange/address', auth.authenticateUser, exchange.address);
 
 router.post('/assets/price', auth.authenticateUser, assets.price);
 router.post('/assets/buy', auth.authenticateUser, assets.buy);

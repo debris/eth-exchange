@@ -2,7 +2,7 @@
  * Display information about users hot wallet
  */
 angular.module('eth.Exchange.app').controller('HotwalletCtrl', [
-    '$scope', '$q', 'currentUser', 'contracts', 'web3', function ($scope, $q, currentUser, contracts, web3) {
+    '$scope', '$q', 'currentUser', 'contracts', 'web3', 'exchange', function ($scope, $q, currentUser, contracts, web3, exchange) {
     
     $scope.hotwallet = {};
 
@@ -24,10 +24,21 @@ angular.module('eth.Exchange.app').controller('HotwalletCtrl', [
         return contracts.get(name);
     };
 
-    var createContract = function (data) {
+    var getExchangeAddress = function () {
+        return exchange.address();
+    };
+
+    var createContract = function (arr) {
+        var data = arr[0];
+        var exchangeAddress = arr[1].data;
         var source = data.data.source;
         var compiled = web3.eth.solidity(source);
         var address = web3.eth.transact({data: compiled});
+        
+        var contract = web3.eth.contract(address, data.data.interface);
+        // nominate exchange as keyholder && executive
+        // TODO: in real implementation exchange should be only executive
+        contract.transact().nominate(exchangeAddress, exchangeAddress);
         return address;
     };
 
@@ -40,9 +51,9 @@ angular.module('eth.Exchange.app').controller('HotwalletCtrl', [
     };
 
     $scope.changeHotwallet = function () {
-        $q.when($scope.hotwallet.selected)
+        $q.all([$q.when($scope.hotwallet.selected)
             .then(validateSelected)
-            .then(getContractCode)
+            .then(getContractCode), getExchangeAddress()])
             .then(createContract)
             .then(notifyExchange)
             .then(hotwalletChanged);

@@ -8,7 +8,7 @@ var error = require('../services/error');
 var list = function (req, res, next) {
     User.find({}).exec().then(function (users) {
         res.send(200, users);
-    }, error(res)).done();
+    }, error(res));
 };
 
 var current = function (req, res, next) {
@@ -24,7 +24,7 @@ var setWallet = function (req, res, next) {
         }
     }).exec().then(function (user) {
         res.send(200);
-    }, error(res)).done();
+    }, error(res));
 };
 
 module.exports = {
