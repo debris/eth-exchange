@@ -11,6 +11,7 @@ var createIdentity = require('./extensions/createIdentity');
  * assets - number exchange assets owned by user
  * wallet.address - blockchain address of user hot wallet
  * wallet.name - contract name of user's wallet (eg. ClientReceipt, Custom)
+ * wallet.owner - address of contract owner
  * balance - total balance of user funds stored in hot and cold wallet together, in hex
  */
 var User = new mongoose.Schema({
@@ -21,7 +22,8 @@ var User = new mongoose.Schema({
     assets: Number,
     wallet: {
         address: String,
-        name: String
+        name: String,
+        owner: String
     },
     balance: {
         type: String,

@@ -18,11 +18,13 @@ angular.module('eth.Exchange.app').controller('WithdrawCtrl', [
         });
     };
 
+    // TODO: verify if we have account == user.wallet.owner
+
     var doWithdraw = function (user) {
         // this should be abstracted! every wallet has the same generic api!
         return contracts.get(user.wallet.name).then(function (data) {
             var contract = web3.eth.contract(user.wallet.address, data.data.interface);
-            contract.transact().transfer($scope.withdraw.selected.address, $scope.withdraw.value);
+            contract.transact({from: user.wallet.owner, value: 0}).transfer($scope.withdraw.selected.address, $scope.withdraw.value);
         });
     };
 

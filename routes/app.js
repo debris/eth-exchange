@@ -5,7 +5,6 @@ var auth = require('../services/auth');
 
 /* GET home page. */
 router.get('/', auth.authenticateWithRedirect, function(req, res, next) {
-    console.log(config);
     res.render('app', { 
         title: 'EthExchange',
         mockEth: config.mockEth
