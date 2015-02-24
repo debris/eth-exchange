@@ -19,7 +19,10 @@ var User = new mongoose.Schema({
     password: String,
     name: String,
     identity: String,
-    assets: Number,
+    assets: {
+        type: Number,
+        default: 0
+    },
     wallet: {
         address: String,
         name: String,

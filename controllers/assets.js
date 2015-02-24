@@ -4,6 +4,7 @@ var error = require('../services/error');
 var exchange = require('../services/exchange');
 var web3 = require('../services/ethereum/web3');
 var W = require('../services/wallet');
+var Operation = require('../models/operation');
 
 var verifyWallet = function (wallet, number) {
     if (!wallet) {
@@ -29,12 +30,28 @@ var price = function (req, res, next) {
     res.send(200, config.assetsPrice);
 };
 
+// TODO: this method is under heavy development
+// TODO: cache pending transactions somewhere?
 var buy = function (req, res, next) {
     var number = req.body.number;
     var price = config.assetsPrice * number;
+    var operation;
     exchange.wallet()
         .then(verifyWallet)
         .then(function (wallet) {
+            // TODO: make it async!
+            // TODO: FIX THIS! IT's ONLY FOR TEST
+            //
+            Operation.create({
+                user: req.user._id,
+                type: 'buy',
+                state: 'pending',
+                assets: number,
+                price: price
+            }).then(function (object) {
+                operation = object;
+            });
+
             res.send(200); // transaction is pending
             return wallet;
         }, error(res))
@@ -42,6 +59,13 @@ var buy = function (req, res, next) {
             return W.transferFromWallet(req.user.wallet, wallet.address, price);
         })
         .then(function () {
+            // TODO fix this, this is too ugly...
+            operation.state = 'finished';
+            operation.markModified('state');
+            operation.save();
+            req.user.assets += number;
+            req.user.markModified('assets');
+            req.user.save();
             console.log('transaction successfull'); // mark transaction as successfull here
         })
         .catch(function (err) {

@@ -2,10 +2,12 @@ var mongoose = require('mongoose');
 
 /**
  * Every user operation registered by exchange should leave the trace
- * User deposits and withdraws should stored here
+ * User assets buys and sells should be stored here 
  * user - user who performed operation
- * type - type of transaction: deposit or withdraw
- * state - if transaction needs to be confirmed by exchange, it's pendning, otherwise it's accepted
+ * type - type of transaction: buy or sell 
+ * state - if transaction needs to be confirmed state is pending, otherwise finished 
+ * assets - number of assets in this operation
+ * price - price of these assets, TODO: check if they shouldnt' be in hex
  */
 var Operation = new mongoose.Schema({
     user: {
@@ -14,13 +16,15 @@ var Operation = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['deposit', 'withdraw'],
+        enum: ['buy', 'sell'],
     },
     state: {
         type: String,
-        enum: ['pending', 'accepted'],
+        enum: ['failed', 'pending', 'finished'],
         default: 'pending'
-    }
+    },
+    assets: Number,
+    price: Number
 });
 
 module.exports = mongoose.model('operation', Operation);
