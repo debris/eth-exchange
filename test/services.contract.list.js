@@ -9,7 +9,7 @@ var expect = chai.expect;
 describe('contract', function () {
     describe('list', function () {
         it('should list all solidity contracts', function () {
-            return expect(contracts.list()).to.eventually.become(["ClientReceipt"]);
+            return expect(contracts.list()).to.eventually.become(['ClientReceipt', 'ClientReceipt2']);
         });
     });
 });
