@@ -2,7 +2,7 @@
  * DepositCtrl enables user to deposit his money on his exchange wallet
  */
 angular.module('eth.Exchange.app').controller('DepositCtrl', [
-    '$scope', '$q', '$state', 'web3', 'receipt', 'accounts', 'currentUser', function ($scope, $q, $state, web3, receipt, accounts, currentUser) {
+    '$scope', '$q', '$state', 'web3', 'contracts', 'accounts', 'currentUser', function ($scope, $q, $state, web3, contracts, accounts, currentUser) {
     $scope.deposit = {};
     $scope.deposit.accounts = accounts();
 
@@ -16,20 +16,19 @@ angular.module('eth.Exchange.app').controller('DepositCtrl', [
     
     var getUser = function () {
         return currentUser.get().then(function (user) {
-            if (!user)
-                throw new Error('user not logged in!');
-            return user;
+            return user.data;
         });
     };
 
     var doDeposit = function (user) {
-        var ClientReceipt = receipt(user.address);
-        return ClientReceipt.transact({
-            from: $scope.deposit.selected.address,
-            value: $scope.deposit.value
-        }).deposit($scope.deposit.selected.address);
-        // TODO: should be:
-        //}).deposit(user.identity);
+        // this should be abstracted! every wallet has the same generic api!
+        return contracts.get(user.wallet.name).then(function (data) {
+            var contract = web3.eth.contract(user.wallet.address, data.data.interface);
+            contract.transact({
+                from: $scope.deposit.selected.address,
+                value: $scope.deposit.value
+            }).deposit('0x' + user.identity);
+        });
     };
 
     var redirect = function () {

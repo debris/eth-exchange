@@ -51,7 +51,7 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
         views: {
             content: {
                 templateUrl: '/static/app/controllers/withdraw/withdraw',
-                contorller: 'WithdrawCtrl'
+                controller: 'WithdrawCtrl'
             }
         }
     });

@@ -1,1 +1,13 @@
 h3 Withdraw 
+div
+    pre and send money
+    form(name='withdrawForm', ng-submit='confirm()')
+        pre TO:
+            select(ng-model='withdraw.selected', ng-options='account.address for account in withdraw.accounts')
+                option(value='') -- chose account --
+        pre VALUE:
+            input(ng-model='withdraw.value', name='value', type='number')
+            span &nbsp;
+            | Wei
+        input(type='submit', value='Submit')
+
