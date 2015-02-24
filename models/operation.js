@@ -24,7 +24,11 @@ var Operation = new mongoose.Schema({
         default: 'pending'
     },
     assets: Number,
-    price: Number
+    price: Number,
+    date: { 
+        type: Date, 
+        default: Date.now 
+    }
 });
 
 module.exports = mongoose.model('operation', Operation);

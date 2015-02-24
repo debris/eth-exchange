@@ -1,3 +1,4 @@
+var Q = require('q');
 var BigNumber = require('bignumber.js');
 var config = require('../config/config');
 var error = require('../services/error');
@@ -30,46 +31,44 @@ var price = function (req, res, next) {
     res.send(200, config.assetsPrice);
 };
 
-// TODO: this method is under heavy development
 // TODO: cache pending transactions somewhere?
 var buy = function (req, res, next) {
     var number = req.body.number;
     var price = config.assetsPrice * number;
-    var operation;
     exchange.wallet()
         .then(verifyWallet)
         .then(function (wallet) {
-            // TODO: make it async!
-            // TODO: FIX THIS! IT's ONLY FOR TEST
-            //
-            Operation.create({
+            var operationPromise = Q.ninvoke(Operation, 'create', {
                 user: req.user._id,
                 type: 'buy',
                 state: 'pending',
                 assets: number,
                 price: price
-            }).then(function (object) {
-                operation = object;
             });
 
-            res.send(200); // transaction is pending
-            return wallet;
+            res.send(200);
+            return Q.all([Q(wallet), operationPromise]);
         }, error(res))
-        .then(function (wallet) {
-            return W.transferFromWallet(req.user.wallet, wallet.address, price);
+        .then(function (arr) {
+            var wallet = arr[0];
+            var operation = arr[1];
+
+            return Q.all([W.transferFromWallet(req.user.wallet, wallet.address, price), Q(operation)]);
         })
-        .then(function () {
-            // TODO fix this, this is too ugly...
+        .then(function (arr) {
+            var operation = arr[1];
+            var user = req.user;
+            
             operation.state = 'finished';
             operation.markModified('state');
             operation.save();
-            req.user.assets += number;
-            req.user.markModified('assets');
-            req.user.save();
-            console.log('transaction successfull'); // mark transaction as successfull here
+            user.assets += number;
+            user.markModified('assets');
+            user.save();
         })
         .catch(function (err) {
-            console.log('transaction failed'); // mark transaction as failed here
+            console.error('transaction failed'); // mark transaction as failed here
+            console.error(err);
         })
         .done();
 
