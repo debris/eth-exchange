@@ -2,7 +2,7 @@
  * Display information about users hot wallet
  */
 angular.module('eth.Exchange.app').controller('HotwalletCtrl', [
-    '$scope', '$q', 'currentUser', 'contracts', 'web3', 'exchange', 'accounts', function ($scope, $q, currentUser, contracts, web3, exchange, accounts) {
+    '$scope', '$q', '$state', 'currentUser', 'contracts', 'web3', 'exchange', 'accounts', function ($scope, $q, $state, currentUser, contracts, web3, exchange, accounts) {
     
     $scope.hotwallet = {};
     $scope.hotwallet.accounts = accounts();
@@ -58,6 +58,8 @@ angular.module('eth.Exchange.app').controller('HotwalletCtrl', [
 
     var hotwalletChanged = function () {
         console.log('hotwallet changed!');
+        // TODO: redirect to thanks section?
+        $state.go('index.account');
     };
 
     $scope.changeHotwallet = function () {

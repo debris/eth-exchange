@@ -14,7 +14,7 @@ router.get('/user', auth.authenticateUser, users.current);
 router.post('/user/setWallet', auth.authenticateUser, users.setWallet);
 router.get('/exchange/address', auth.authenticateUser, exchange.address);
 
-router.post('/assets/price', auth.authenticateUser, assets.price);
+router.get('/assets/price', auth.authenticateUser, assets.price);
 router.post('/assets/buy', auth.authenticateUser, assets.buy);
 router.post('/assets/sell', auth.authenticateUser, assets.sell);
 

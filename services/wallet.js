@@ -1,3 +1,4 @@
+var Q = require('q');
 var contracts = require('./contracts');
 var web3 = require('./ethereum/web3');
 
@@ -27,19 +28,19 @@ var watchWalletDeposit = function (wallet, address, value) {
     return deferred.promise;
 };
 
-var transferFromWallet = function (walletAddress, to, value) {
+var transferFromWallet = function (userWallet, to, value) {
     // TODO: instead of using ClientReceipt abi, use an abstract abi
-    return contracts.getInterface(walletAddress, 'ClientReceipt').then(function (wallet) {
+    return contracts.getInterface(userWallet.address, userWallet.name).then(function (wallet) {
         var watch = watchWalletTransfer(wallet, to, value);
-        wallet.transact().transfer(to, amount);
+        wallet.transact().transfer(to, value);
         return watch; 
     });
 };
 
-var transferToWallet = function (walletAddress, from, value) {
-    return contracts.getInterface(walletAddress, 'ClientReceipt').then(function (wallet) {
+var transferToWallet = function (userWallet, from, value) {
+    return contracts.getInterface(userWallet.address, userWallet.name).then(function (wallet) {
         var watch = watchWalletDeposit(wallet, from, value);
-        web3.eth.transact({from: from, to: walletAddress, value: value});
+        web3.eth.transact({from: from, to: userWallet.address, value: value});
         return watch;
     });
 };

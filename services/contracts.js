@@ -49,8 +49,8 @@ var createNewContract = function (name) {
 };
 
 var getInterface = function (address, name) {
-    loadInterface(name).then(function (interface) {
-        return web3.eth.contract(address, abi(name));
+    return loadInterface(name).then(function (interface) {
+        return web3.eth.contract(address, interface);
     });
 };
 

@@ -56,6 +56,26 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
         }
     });
 
+    $stateProvider.state('index.buy', {
+        url: '/buy',
+        views: {
+            content: {
+                templateUrl: '/static/app/controllers/buy/buy',
+                controller: 'BuyCtrl'
+            }
+        }
+    });
+
+    $stateProvider.state('index.sell', {
+        url: '/sell',
+        views: {
+            content: {
+                templateUrl: '/static/app/controllers/sell',
+                controller: 'SellCtrl'
+            }
+        }
+    });
+
     $stateProvider.state('index.thanks', {
         url: '/thanks',
         views: {

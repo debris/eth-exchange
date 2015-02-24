@@ -39,7 +39,7 @@ var buy = function (req, res, next) {
             return wallet;
         }, error(res))
         .then(function (wallet) {
-            return W.transferFromWallet(req.user.wallet.address, wallet.address, price);
+            return W.transferFromWallet(req.user.wallet, wallet.address, price);
         })
         .then(function () {
             console.log('transaction successfull'); // mark transaction as successfull here
@@ -65,7 +65,7 @@ var sell = function (req, res, next) {
             return wallet;
         }, error(res))
         .then(function (wallet) {
-            return W.transferToWallet(req.user.wallet.address, wallet.address, price); 
+            return W.transferToWallet(req.user.wallet, wallet.address, price); 
         })
         .then(function () {
             console.log('transaction successfull'); // mark transaction as successfull here;

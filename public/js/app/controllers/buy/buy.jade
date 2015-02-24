@@ -1,0 +1,12 @@
+h3 Buy
+div
+    pre FUNDS: {{buy.funds}}
+    form(name='buyForm', ng-submit='confirm()')
+        pre PRICE: {{buy.price}} (price per asset) * {{buy.number}} (number of assets) = {{buy.number * buy.price}}
+        pre NUMBER (of assets to buy): 
+            input(ng-model='buy.number', name='value', type='number')
+            span &nbsp;
+            | assets
+        input(type='submit', value='Buy')
+            
+    
