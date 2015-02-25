@@ -1,2 +1,10 @@
 h3 Sell
+div
+    form(name='sellForm', ng-submit='confirm()')
+        pre PRICE: {{sell.price}} (price per asset) * {{sell.number}} (number of assets) = {{sell.number * sell.price}}
+        pre NUMBER (of assets to sell):
+            input(ng-model='sell.number', name='value', type='number')
+            span &nbsp;
+            | assets
+        input(type='submit', value='Sell')
 

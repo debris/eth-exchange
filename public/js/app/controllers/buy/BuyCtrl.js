@@ -30,7 +30,7 @@ angular.module('eth.Exchange.app').controller('BuyCtrl', [
 
     var redirect = function () {
         console.log('bought ' + $scope.buy.number +  'assets');
-        $state.go('index.account');
+        $state.go('index.thanks');
     };
 
     $scope.confirm = function () {

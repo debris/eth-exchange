@@ -28,9 +28,25 @@ var watchWalletTransfer = function (wallet, address, value) {
 var watchWalletDeposit = function (wallet, address, value) {
     var deferred = Q.defer();
     // TODO: filter who deposited the money
-    wallet.Deposit().changed(function (res) {
+    var number = web3.eth.number + 1;
+    // TODO: filter who transfered the money
+    var watch = wallet.AnonymousDeposit();
+    watch.changed(function (res) {
         // TODO: same as inside watchWalletTransfer
-        deferred.resolve();
+        
+        // reject after some timeout 
+        // (number + 1).should.be.equal.to(res.number)
+        if (res.args._value && res.args._value.equals(value) && number <= res.number) {
+            // TODO
+            // check transaction count at block here!
+            // if transaction count > 1
+            // check web3.eth.transaction
+            var count = web3.eth.transactionCount(res.number);
+
+
+            deferred.resolve();
+            watch.uninstall();
+        }
     });
 
     return deferred.promise;

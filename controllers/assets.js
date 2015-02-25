@@ -17,7 +17,7 @@ var verifyWallet = function (wallet, number) {
 
 var verifyWalletBalance = function (wallet, price) {
     var balance = web3.eth.balanceAt(wallet.address); 
-    var balance = balanec.length > 2 ? balance.substr(2) : "0";
+    var balance = balance.length > 2 ? balance.substr(2) : "0";
     // TODO: make all calculations on bignumbers
     var diff = new BigNumber(balance, 16).minus(price);
     if (diff.lessThan(0)) {
@@ -37,6 +37,9 @@ var buy = function (req, res, next) {
     var price = config.assetsPrice * number;
     exchange.wallet()
         .then(verifyWallet)
+        .then(function (wallet) {
+            return verifyWalletBalance(wallet, price);
+        })
         .then(function (wallet) {
             var operationPromise = Q.ninvoke(Operation, 'create', {
                 user: req.user._id,
@@ -59,6 +62,7 @@ var buy = function (req, res, next) {
             var operation = arr[1];
             var user = req.user;
             
+            // TODO: get user model with mongo, so assets are not overriden
             operation.state = 'finished';
             operation.markModified('state');
             operation.save();
@@ -74,27 +78,55 @@ var buy = function (req, res, next) {
 
 };
 
+var verifyAssets = function (user, number) {
+    if (user.assets < number) {
+        throw new Error('not enough assets!');
+    }
+};
+
+// TODO: group promises niceR!
 var sell = function (req, res, next) {
-    // TODO: verify users assets, if he has enought
     var number = req.body.number;
     var price = config.assetsPrice * number;
-    exchange.wallet()
+    Q(verifyAssets(req.user, req.user))
+        .then(function () {
+            return exchange.wallet()
+        })
         .then(verifyWallet)
         .then(function (wallet) {
-            return verifyWalletBalance(wallet, price);
-        })
-        .then(function (wallet) {
+            var operationPromise = Q.ninvoke(Operation, 'create', {
+                user: req.user._id,
+                type: 'sell',
+                state: 'pending',
+                assets: number,
+                price: price
+            });
+
             res.send(200); // transaction is pending
-            return wallet;
+            return Q.all([Q(wallet), operationPromise]);
         }, error(res))
-        .then(function (wallet) {
-            return W.transferToWallet(req.user.wallet, wallet.address, price); 
+        .then(function (arr) {
+            var wallet = arr[0];
+            var operation = arr[1];
+
+            return Q.all([W.transferToWallet(req.user.wallet, wallet.address, price), Q(operation)]);
         })
-        .then(function () {
+        .then(function (arr) {
+            var operation = arr[1];
+            var user = req.user;
+            
+            // TODO: update user model with raw mongo, so assets are not overriden
+            operation.state = 'finished';
+            operation.markModified('state');
+            operation.save();
+            user.assets -= number;
+            user.markModified('assets');
+            user.save();
+
             console.log('transaction successfull'); // mark transaction as successfull here;
         })
         .catch(function (err) {
-            console.log('transaction failed'); // mark transaction as failed here
+            console.error('transaction failed'); // mark transaction as failed here
         })
         .done();
 };

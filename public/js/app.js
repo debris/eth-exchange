@@ -70,7 +70,7 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
         url: '/sell',
         views: {
             content: {
-                templateUrl: '/static/app/controllers/sell',
+                templateUrl: '/static/app/controllers/sell/sell',
                 controller: 'SellCtrl'
             }
         }
