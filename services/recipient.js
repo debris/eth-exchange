@@ -11,11 +11,11 @@ var onAnonymousDeposit = function (from, value) {
 
 };
 
-var onDeposit = function (from, identity, value) {
+var onDeposit = function (from, identity, value, block) {
     Q.all([
-        users.increaseUserBalance(indentity, value),
+        users.increaseUserBalance(identity, value),
         exchange.increaseExchangeBalance(value),
-        receipts.createDepositReceipt(identity, value, from, 0)
+        receipts.createDepositReceipt(identity, value, from, block)
     ]);
 };
 
@@ -52,6 +52,19 @@ var setupWatches = function () {
             var watch = web3.eth.watch(contract);
             watch.changed(function (res) {
                 // TODO: handle this 
+                console.log('res');
+                console.log(JSON.stringify(res, null, 2));
+            });
+
+            // test only
+            var w2 = contract.Deposit();
+            w2.changed(function (res) {
+                console.log('res2');
+                console.log(JSON.stringify(res, null, 2));
+                if (!res.event) {
+                    return;
+                }
+                onDeposit(res.args._from, res.args._id.slice(2), parseInt(res.args._value), res.number);
             });
         });
     });

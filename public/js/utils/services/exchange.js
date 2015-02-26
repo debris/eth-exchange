@@ -3,12 +3,12 @@
  */
 angular.module('eth.Exchange.utils').service('exchange', ['$http', function ($http) {
     
-    var address = function () {
+    var getAddress = function () {
         return $http.get('/api/exchange/address');
     };
 
     return {
-        address: address
+        getAddress: getAddress
     };
 
 }]);

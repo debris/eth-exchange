@@ -2,28 +2,30 @@
  * DepositCtrl enables user to deposit his money on his exchange wallet
  */
 angular.module('eth.Exchange.app').controller('DepositCtrl', [
-    '$scope', '$q', '$state', 'web3', 'contracts', 'accounts', 'currentUser', function ($scope, $q, $state, web3, contracts, accounts, currentUser) {
+    '$scope', '$q', '$state', 'web3', 'contracts', 'accounts', 'currentUser', 'exchange', function ($scope, $q, $state, web3, contracts, accounts, currentUser, exchange) {
     $scope.deposit = {};
     $scope.deposit.accounts = accounts();
 
-    var validateSelectedAddress = function (selected) {
-        if (!selected || !selected.address)
-            throw new Error('no address selected!');
-        // TODO: dont use parseInt here, use BigNumber instead
-        if (parseInt(selected.balance) < $scope.deposit.value)
-            throw new Error('not enought funds!');
-    };
-    
-    var getUser = function () {
-        return currentUser.get().then(function (user) {
-            return user.data;
+    var validateSelectedAddress = function () {
+        return $q.when($scope.deposit.selected).then(function (selected) {
+            if (!selected || !selected.address)
+                throw new Error('no address selected!');
+            // TODO: dont use parseInt here, use BigNumber instead
+            if (parseInt(selected.balance) < $scope.deposit.value)
+                throw new Error('not enought funds!');
         });
     };
+    
+    var getStuff = function () {
+        return $q.all([currentUser.get(), exchange.getAddress()]);
+    };
 
-    var doDeposit = function (user) {
+    var doDeposit = function (arr) {
+        var user = arr[0].data;
+        var address = arr[1].data;
         // this should be abstracted! every wallet has the same generic api!
-        return contracts.get(user.wallet.name).then(function (data) {
-            var contract = web3.eth.contract(user.wallet.address, data.data.interface);
+        return contracts.getInterface().then(function (data) {
+            var contract = web3.eth.contract(address, data.data);
             contract.transact({
                 from: $scope.deposit.selected.address,
                 value: $scope.deposit.value
@@ -37,9 +39,8 @@ angular.module('eth.Exchange.app').controller('DepositCtrl', [
     };
 
     $scope.confirm = function () {
-        $q.when($scope.deposit.selected)
-            .then(validateSelectedAddress)
-            .then(getUser)
+        validateSelectedAddress()
+            .then(getStuff)
             .then(doDeposit)
             .then(redirect);
     };
