@@ -2,8 +2,12 @@ var Q = require('q');
 var web3 = require('./ethereum/web3');
 var Block = require('../models/block');
 
+var get = function () {
+    return Q.ninvoke(Block, 'findOne', {});
+};
+
 var findOrCreateBlock = function () {
-    return Q.ninvoke(Block, 'findOne', {}).then(function (block) {
+    return get().then(function (block) {
         if (block) {
             return block;
         }
@@ -23,7 +27,17 @@ var setup = function () {
     return findOrCreateBlock();
 };
 
+var updateNumber = function (number) {
+    return Q.ninvoke(Block, 'findOneAndUpdate', {}, {
+        $set: {
+            number: number
+        }
+    });
+};
+
 module.exports = {
-    setup: setup
+    setup: setup,
+    get: get,
+    updateNumber: updateNumber
 };
 

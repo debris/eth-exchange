@@ -1,10 +1,15 @@
 var Q = require('q');
+var config = require('../config/config');
 var web3 = require('./ethereum/web3');
 var contracts = require('./contracts');
 var Exchange = require('../models/exchange');
 
+var get = function () {
+    return Q.ninvoke(Exchange, 'findOne', {});
+};
+
 var findOrCreateExchange = function () {
-    return Q.ninvoke(Exchange, 'findOne', {}).then(function (exchange) {
+    return get().then(function (exchange) {
         if (exchange) {
             return exchange;
         }
@@ -12,7 +17,7 @@ var findOrCreateExchange = function () {
         console.warn('no exchange object found in database');
         console.warn('creating new one');
         
-        return contracts.createNewContract('ClientReceipt2').then(function (address) {
+        return contracts.createNewContract(config.contract).then(function (address) {
             // TODO: exchange object should be also initiated with owner address
             return Q.ninvoke(Exchange, 'create', {
                 address: address 
@@ -40,6 +45,7 @@ var setup = function () {
 };
 
 module.exports = {
-    setup: setup
+    setup: setup,
+    get: get
 };
 

@@ -15,17 +15,20 @@ var config = {
     develop: {
         port: port || 2000,
         db: 'mongodb://' + mongoHost + '/eth-exchange-develop',
-        assetsPrice: 200
+        assetsPrice: 200,
+        contract: 'ClientReceipt2'
     },
     production: {
         port: port || 3000,
         db: 'mongodb://' + mongoHost + '/eth-exchange-production',
-        assetsPrice: 1000 // this should be calculated dynamically
+        assetsPrice: 1000,
+        contract: 'ClientReceipt2'
     },
     test: {
         port: port || 3001,
         db: 'mongodb://' + mongoHost + '/eth-exchange-test',
-        assetsPrice: 2000
+        assetsPrice: 2000,
+        contract: 'ClientReceipt2'
     }
 };
 
