@@ -1,0 +1,80 @@
+models:
+
+block
+	number - Number
+
+exchange
+	address - String, address
+	owner - String, address
+	expectedBalance - String, hex (to test against blockchain balance)
+	open - Boolean
+	keyholder - String, address
+	executive - String, address
+
+user
+	balance - String, hex
+	identity - String, at least 47 bits, (probably will be using 32 bytes)
+
+receipt
+	user, mongo _id
+	value: String, hex
+	type: String, [deposit, withdraw]
+	state: String, [pending, accepted, rejected(final), finished(final)]
+	from: String, address
+	to: String, address
+	block: Number
+
+
+1. exchange starts
+2. exchange get it's coldwallet
+	2.a. if there is no coldwallet, log warning, and create one
+
+	2.b. if there is coldwallet, exchange checks if there is matching owner in cpp-etheruem addresses
+		2.b.a. if it's matching continue
+		2.b.b. otherwise throw an exception!
+
+3. exchange get list of all events since the block it was closed
+4. it creates appropriate deposit/withdraw receipts
+5. exchange setup watches for pending, deposit, withdraw
+
+6. onPending
+	increase block number
+
+	
+7. onDeposit
+	create deposit receipt with finished state
+	increase user balance
+	increase exchange balance
+
+8. onWithdraw
+	mark receipt as finished
+
+9. api endpoints:
+	- withdraw POST {value: String(hex), to: String(address)}
+		- adds withdraw to the list of pending transactions
+	- accont GET {}
+		- get all user info (with account)
+	- receipts GET 
+		- list all user receipts
+
+
+10. admin api endpoints
+	- admin/receipts GET
+		- lists all receipts (pagination as improvement)
+	- admin/receipts/approve POST {approved: boolean, _id: string(mongoose _id)}
+
+11. views: 
+	- account
+	- deposit (for dapp only deposit)
+	- withdraw (to POST withdraw request to the exchange)
+	- thanks (after deposit / withdraw)
+	- history (history of user withdraws/deposits)
+
+
+
+
+
+
+
+
+
