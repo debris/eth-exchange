@@ -2,15 +2,19 @@ h3 History
 div
     table
         tr
+            th: a(href='', ng-click='predicate="value"; reverse=!reverse') Value
             th: a(href='', ng-click='predicate="type"; reverse=!reverse') Type
-            th: a(href='', ng-click='predicate="assets"; reverse=!reverse') Assets
-            th: a(href='', ng-click='predicate="price"; reverse=!reverse') Price
             th: a(href='', ng-click='predicate="state"; reverse=!reverse') State
+            th: a(href='', ng-click='predicate="from"; reverse=!reverse') From 
+            th: a(href='', ng-click='predicate="to"; reverse=!reverse') To 
+            th: a(href='', ng-click='predicate="block"; reverse=!reverse') Block 
             th: a(href='', ng-click='predicate="date"; reverse=!reverse') Date
-        tr(ng-repeat='operation in history.operations | orderBy:predicate:reverse')
-            td {{operation.type}}
-            td {{operation.assets}}
-            td {{operation.price}}
-            td {{operation.state}}
-            td {{operation.date}}
+        tr(ng-repeat='receipt in history.receipts | orderBy:predicate:reverse')
+            td {{receipt.value}}
+            td {{receipt.type}}
+            td {{receipt.state}}
+            td {{receipt.from}}
+            td {{receipt.to}}
+            td {{receipt.block}}
+            td {{receipt.date}}
 

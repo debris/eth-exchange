@@ -1,9 +1,9 @@
-angular.module('eth.Exchange.app').controller('HistoryCtrl', ['$scope', 'operations', function ($scope, operations) {
+angular.module('eth.Exchange.app').controller('HistoryCtrl', ['$scope', 'receipts', function ($scope, receipts) {
     $scope.history = {};
     $scope.predicate = '-date';
 
-    operations.list().success(function (operations) {
-        $scope.history.operations = operations;
+    receipts.list().success(function (receipts) {
+        $scope.history.receipts = receipts;
     });
 }]);
 

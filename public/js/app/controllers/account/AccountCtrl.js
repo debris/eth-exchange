@@ -7,8 +7,6 @@ angular.module('eth.Exchange.app').controller('AccountCtrl', ['$scope', 'account
 
     currentUser.get().success(function (user) {
         $scope.account.user = user;
-        if (user.wallet.address)
-            $scope.account.hotwalletBalance = web3.toDecimal(web3.eth.balanceAt(user.wallet.address)) || "0";
     });
 
     $scope.account.accounts = accounts();

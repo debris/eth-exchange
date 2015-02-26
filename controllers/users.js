@@ -15,21 +15,8 @@ var current = function (req, res, next) {
     res.send(200, req.user);
 };
 
-var setWallet = function (req, res, next) {
-    User.findOneAndUpdate({
-        _id: req.user._id 
-    }, {
-        $set: {
-            wallet: req.body
-        }
-    }).exec().then(function (user) {
-        res.send(200);
-    }, error(res));
-};
-
 module.exports = {
     list: list,
-    current: current,
-    setWallet: setWallet
+    current: current
 };
 

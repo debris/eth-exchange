@@ -3,16 +3,13 @@ var router = express.Router();
 var auth = require('../services/auth');
 
 var users = require('../controllers/users');
-var contracts = require('../controllers/contracts');
+var receipts = require('../controllers/receipts');
 var exchange = require('../controllers/exchange');
 var generic = require('../controllers/generic');
 
-router.get('/contracts', auth.authenticateUser, contracts.list);
-router.get('/contracts/:name', auth.authenticateUser, contracts.get);
 router.get('/user', auth.authenticateUser, users.current);
-router.post('/user/setWallet', auth.authenticateUser, users.setWallet);
+router.get('/receipts', auth.authenticateUser, receipts.list);
 router.get('/exchange/address', auth.authenticateUser, exchange.address);
-
 
 router.get('/:model', auth.authenticateUser, generic.list);
 router.get('/:model/:key/:id', auth.authenticateUser, generic.get);
