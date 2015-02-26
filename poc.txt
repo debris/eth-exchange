@@ -22,7 +22,8 @@ receipt
 	state: String, [pending, accepted, rejected(final), finished(final)]
 	from: String, address
 	to: String, address
-	block: Number
+	block: Number,
+    date: Date
 
 
 1. exchange starts
