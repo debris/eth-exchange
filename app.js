@@ -7,9 +7,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var config = require('./config/config');
-var wallet = require('./config/wallet');
-var solidityBridge = require('./services/solidityBridge');
 var passportConfig = require('./config/passport');
+var exchange = require('./config/exchange');
 
 var authRoutes = require('./routes/auth');
 var appRoutes = require('./routes/app');
@@ -22,9 +21,7 @@ mongoose.connect(config.db);
 var db = mongoose.connection;
 
 db.on('open', function () {
-    wallet.setup().then(function (wallet){
-        console.log('exchnage wallet address: ' + wallet.address);
-    })
+    exchange.setup();
 });
 
 db.on('error', function () {
@@ -105,8 +102,7 @@ app.use(function(err, req, res, next) {
     });
 });
 
-// setup solidity bridge
-solidityBridge.setup();
+
 
 module.exports = app;
 

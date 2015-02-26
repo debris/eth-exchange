@@ -1,11 +1,10 @@
 var Q = require('q');
-var Wallet = require('../models/wallet');
 
-var wallet = function () {
-    return Q.ninvoke(Wallet, 'findOne', {}); 
+var setupHotwallet = function () {
+    return Q();
 };
 
 module.exports = {
-    wallet: wallet 
+    setupHotwallet: setupHotwallet
 };
 

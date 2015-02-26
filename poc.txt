@@ -27,10 +27,10 @@ receipt
 
 
 1. exchange starts
-2. exchange get it's coldwallet
-	2.a. if there is no coldwallet, log warning, and create one
+2. exchange get it's hotwallet
+	2.a. if there is no hotwallet, log warning, and create one
 
-	2.b. if there is coldwallet, exchange checks if there is matching owner in cpp-etheruem addresses
+	2.b. if there is hotwallet, exchange checks if there is matching owner in cpp-etheruem addresses
 		2.b.a. if it's matching continue
 		2.b.b. otherwise throw an exception!
 
