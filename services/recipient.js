@@ -43,7 +43,18 @@ var handleUnhandledEvents = function () {
 };
 
 var setupWatches = function () {
-    return Q();
+    return Q.all([exchange, block]).then(function (arr) {
+        var ex = arr[0];
+        var bl = arr[1];
+
+        return contracts.getInterface(ex.address, config.contract).then(function (contract) {
+            // TODO: setup filter from certain block
+            var watch = web3.eth.watch(contract);
+            watch.changed(function (res) {
+                // TODO: handle this 
+            });
+        });
+    });
 };
 
 module.exports = {

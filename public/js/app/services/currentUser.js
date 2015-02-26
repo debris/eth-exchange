@@ -9,17 +9,8 @@ angular.module('eth.Exchange.app').service('currentUser', ['$http', function ($h
         return $http.get('/api/user');
     };
 
-    var changeHotwallet = function (address, name, owner) {
-        return $http.post('/api/user/setWallet', {
-            address: address,
-            name: name,
-            owner: owner
-        });
-    }; 
-
     return {
-        get: get,
-        changeHotwallet: changeHotwallet
+        get: get
     }; 
 }]);
 
