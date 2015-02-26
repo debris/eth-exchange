@@ -8,3 +8,5 @@ var Block = new mongoose.Schema({
     number: Number
 });
 
+module.exports = mongoose.model('block', Block);
+

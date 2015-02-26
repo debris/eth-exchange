@@ -1,13 +1,9 @@
 var Q = require('q');
 var User = require('../models/user');
-var Operation = require('../models/operation');
-var Wallet = require('../models/wallet');
 var error = require('../services/error');
 
 var models = {
-    users: User,
-    operations: Operation,
-    wallets: Wallet
+    users: User
 };
 
 var findModel = function (name) {

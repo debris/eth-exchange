@@ -34,7 +34,7 @@ receipt
 		2.b.a. if it's matching continue
 		2.b.b. otherwise throw an exception!
 
-3. exchange get list of all events since the block it was closed
+3. exchange get list of all events since the block in which it was closed
 4. it creates appropriate deposit/withdraw receipts
 5. exchange setup watches for pending, deposit, withdraw
 
