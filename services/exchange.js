@@ -44,8 +44,23 @@ var setup = function () {
         .then(verifyExchange);
 };
 
+var increaseExchangeBalance = function (value) {
+    return Q.ninvoke(Exchange, 'findOneAndUpdate', {}, {
+    }, {
+        $inc: {
+            expectedBalance: value 
+        }
+    });
+};
+
+var decreaseExchangeBalance = function (value) {
+    return increaseExchangeBalance(-value);
+};
+
 module.exports = {
     setup: setup,
-    get: get
+    get: get,
+    increaseExchangeBalance: increaseExchangeBalance,
+    decreaseExchangeBalance: decreaseExchangeBalance
 };
 

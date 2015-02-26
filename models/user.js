@@ -8,7 +8,8 @@ var createIdentity = require('./extensions/createIdentity');
  * password - encrypted user password
  * name - is display name of the user, by default it's user's email
  * identity - exchange identity of the user, should be used to deposit funds
- * balance - total balance of user funds stored on exchange, in hex
+ * balance - total balance of user funds stored on exchange
+ * availableBalance - balance of the user that is available for usage (is not in the withdraw process)
  */
 var User = new mongoose.Schema({
     email: String,
@@ -16,8 +17,12 @@ var User = new mongoose.Schema({
     name: String,
     identity: String,
     balance: {
-        type: String,
-        default: '0x'
+        type: Number, 
+        default: 0
+    },
+    availableBalance: {
+        type: Number,
+        default: 0
     }
 });
 

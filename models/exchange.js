@@ -13,8 +13,8 @@ var Exchange = new mongoose.Schema({
     address: String,
     owner: String,
     expectedBalance: {
-        type: String,
-        default: '0x'
+        type: Number,
+        default: 0
     },
     open: Boolean,
     keyholder: String,

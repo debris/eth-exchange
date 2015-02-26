@@ -3,14 +3,20 @@ var config = require('../config/config');
 var exchange = require('./exchange');
 var block = require('./block');
 var contracts = require('./contracts');
+var users = require('./users');
 var web3 = require('./ethereum/web3');
+var receipts = require('./receipts');
 
 var onAnonymousDeposit = function (from, value) {
 
 };
 
 var onDeposit = function (from, identity, value) {
-
+    Q.all([
+        users.increaseUserBalance(indentity, value),
+        exchange.increaseExchangeBalance(value),
+        receipts.createDepositReceipt(identity, value, from, 0)
+    ]);
 };
 
 var onRefill = function (from, value) {

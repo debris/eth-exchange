@@ -12,8 +12,8 @@ var mongoose = require('mongoose');
  * date - date of receipt creation
  */
 var Receipt = new mongoose.Schema({
-    identity: String
-    value: String,
+    identity: String,
+    value: Number,
     type: {
         type: String,
         enum: ['deposit', 'withdraw']
