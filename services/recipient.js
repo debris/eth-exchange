@@ -35,7 +35,7 @@ var onTransfer = function (from, to, value) {
 };
 
 var setupPendingWatch = function () {
-    var pendingWatch = web3.eth.watch('pending').then(function () {
+    var pendingWatch = web3.eth.watch('pending').changed(function () {
         var number = web3.eth.number;
         
         console.log('new block: ' + number);
@@ -44,8 +44,8 @@ var setupPendingWatch = function () {
     });
 };
 
-var setupAnonymousDepositWatch = function (contract, block) {
-    var depositWatch = contract.AnonymousDeposit({}, { earliest: Math.max(block.number - 3, 0)});
+var setupAnonymousDepositWatch = function (contract, number) {
+    var depositWatch = contract.AnonymousDeposit({}, { earliest: number});
     depositWatch.changed(function (res) {
 
         console.log('anonymous deposit');
@@ -59,9 +59,9 @@ var setupAnonymousDepositWatch = function (contract, block) {
     });
 };
 
-var setupDepositWatch = function (contract, block) {
+var setupDepositWatch = function (contract, number) {
 
-    var depositWatch = contract.Deposit({}, { earliest: Math.max(block.number - 3, 0)});
+    var depositWatch = contract.Deposit({}, { earliest: number});
     depositWatch.changed(function (res) {
 
         console.log('deposit');
@@ -76,14 +76,16 @@ var setupDepositWatch = function (contract, block) {
 };
 
 var setupWatches = function () {
-    return Q.all([exchange, block]).then(function (arr) {
+    return Q.all([exchange.get(), block.get()]).then(function (arr) {
         var ex = arr[0];
         var bl = arr[1];
 
         return contracts.getInterface(ex.address, config.contract).then(function (contract) {
+            // process last few blocks once again
+            var number = Math.max(bl.number - 3, 0);
             setupPendingWatch();
-            setupAnonymousDepositWatch(contract, bl);
-            setupDepositWatch(contract, bl);
+            setupAnonymousDepositWatch(contract, number);
+            setupDepositWatch(contract, number);
         });
     });
 };

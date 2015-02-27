@@ -27,6 +27,7 @@ var findOrCreateExchange = function () {
 };
 
 var verifyExchange = function (exchange) {
+    console.log('exchange address: ' + exchange.address);
     var accounts = web3.eth.accounts; 
     var success = false;
     for (var i = 0; i < accounts.length && !success; i++) {

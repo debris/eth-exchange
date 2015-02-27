@@ -23,8 +23,13 @@ var findOrCreateBlock = function () {
     });
 };
 
+var verifyBlock = function (block) {
+    console.log('block number: ' + block.number);
+};
+
 var setup = function () {
-    return findOrCreateBlock();
+    return findOrCreateBlock()
+        .then(verifyBlock);
 };
 
 var updateNumber = function (number) {
