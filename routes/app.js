@@ -4,7 +4,7 @@ var config = require('../config/config');
 var auth = require('../services/auth');
 
 /* GET home page. */
-router.get('/', auth.authenticateWithRedirect, function(req, res, next) {
+router.get('/', auth.authenticateUserWithRedirect, function(req, res, next) {
     res.render('app', { 
         title: 'EthExchange',
         mockEth: config.mockEth

@@ -23,6 +23,11 @@ var User = new mongoose.Schema({
     availableBalance: {
         type: Number,
         default: 0
+    },
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     }
 });
 

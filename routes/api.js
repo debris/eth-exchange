@@ -13,10 +13,10 @@ router.get('/receipts', auth.authenticateUser, receipts.list);
 router.get('/contracts/interface', auth.authenticateUser, contracts.interface);
 router.get('/exchange/address', auth.authenticateUser, exchange.address);
 
-router.get('/:model', auth.authenticateUser, generic.list);
-router.get('/:model/:key/:id', auth.authenticateUser, generic.get);
-router.post('/:model', auth.authenticateUser, generic.create);
-router.post('/:model/:key/:id', auth.authenticateUser, generic.update);
+router.get('/:model', auth.authenticateAdmin, generic.list);
+router.get('/:model/:key/:id', auth.authenticateAdmin, generic.get);
+router.post('/:model', auth.authenticateAdmin, generic.create);
+router.post('/:model/:key/:id', auth.authenticateAdmin, generic.update);
 
 module.exports = router;
 
