@@ -17,12 +17,45 @@ var createDepositReceipt = function (hash, identity, value, from, block) {
         upsert: true,
         new: false
     }).then(function (object) {
-        // returns true if new object was created
+        // returns true if new receipt was created
+        return object === null;
+    });
+};
+
+var createWithdrawReceipt = function (hash, value, from, to, block) {
+    var updateObject = {
+        hash: hash,
+        value: value,
+        type: 'withdraw',
+        state: 'finished',
+        from: from,
+        to: to,
+        block: block
+    };
+
+    return Q.ninvoke(Receipt, 'findOneAndUpdate', {
+        $or: [{
+            state: 'pending' 
+        }, {
+            state: 'accepted'
+        }, {
+            state: 'finished',
+            block: block,
+            hash: hash
+        }]
+    }, {
+        $set: udpateObject
+    }, {
+        upsert: true,
+        new: false
+    }).then(function (object) {
+        // returns true if new receipt was created
         return object === null;
     });
 };
 
 module.exports = {
-    createDepositReceipt: createDepositReceipt
+    createDepositReceipt: createDepositReceipt,
+    createWithdrawReceipt: createWithdrawReceipt
 };
 

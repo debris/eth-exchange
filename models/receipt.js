@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
  * value - value of transfer, in hex
  * type - type of transfer, can be deposit of withdraw
  * state - state of transfer, for deposit it is always finished, for withdraw all states are valid
+ *          external means, that is was not signed in the exchange
  * from - address from which transaction was made
  * to - destination of transaction
  * block - number of the block in which transaction was made
@@ -22,7 +23,7 @@ var Receipt = new mongoose.Schema({
     },
     state: {
         type: String,
-        enum: ['pending', 'accepted', 'rejected', 'finished']
+        enum: ['pending', 'accepted', 'rejected', 'finished', 'external']
     },
     from: String,
     to: String,

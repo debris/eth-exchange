@@ -2,7 +2,7 @@ var Q = require('q');
 var config = require('../config/config');
 var exchange = require('./exchange');
 var block = require('./block');
-var contracts = require('./contracts');
+var interface = require('./interface');
 var users = require('./users');
 var web3 = require('./ethereum/web3');
 var receipts = require('./receipts');
@@ -45,7 +45,7 @@ var setupPendingWatch = function () {
 };
 
 var setupAnonymousDepositWatch = function (contract, number) {
-    var depositWatch = contract.AnonymousDeposit({}, { earliest: number});
+    var depositWatch = contract.AnonymousDeposit({}, { earliest: number });
     depositWatch.changed(function (res) {
 
         console.log('anonymous deposit');
@@ -61,7 +61,7 @@ var setupAnonymousDepositWatch = function (contract, number) {
 
 var setupDepositWatch = function (contract, number) {
 
-    var depositWatch = contract.Deposit({}, { earliest: number});
+    var depositWatch = contract.Deposit({}, { earliest: number });
     depositWatch.changed(function (res) {
 
         console.log('deposit');
@@ -71,30 +71,41 @@ var setupDepositWatch = function (contract, number) {
             return;
         }
 
-        onDeposit(res.hash, res.args._from, res.args._id.slice(2), parseInt(res.args._value), res.number);
+        /// TODO
+        onDeposit(res.hash, res.args._from, parseInt(res.args._value), res.number);
+    });
+};
+
+var setupWithdrawWatch = function (contract, number) {
+    
+    var withdrawWatch = contract.Withdraw({}, { earliest: number });
+    withdrawWatch.changed(function (res) {
+    
+        console.log('withdraw');
+        console.log(JSON.stringify(res, null, 2));
+
+        if (!res.event || !res.args._value) {
+            return;
+        }
+
+        onWithdraw(res.hash, res.args._from, res.args._to, res.args._id.slice(2), parseInt(res.args._value), res.number);
+
     });
 };
 
 var setupWatches = function () {
-    return Q.all([exchange.get(), block.get()]).then(function (arr) {
-        var ex = arr[0];
+    return Q.all([interface.get(), block.get()]).then(function (arr) {
+        var contract = arr[0];
         var bl = arr[1];
 
-        return contracts.getInterface(ex.address, config.contract).then(function (contract) {
-            // process last few blocks once again
-            var number = Math.max(bl.number - 3, 0);
-            setupPendingWatch();
-            setupAnonymousDepositWatch(contract, number);
-            setupDepositWatch(contract, number);
-        });
+        var number = Math.max(bl.number - 3, 0);
+        setupPendingWatch();
+        setupAnonymousDepositWatch(contract, number);
+        setupDepositWatch(contract, number);
     });
 };
 
 module.exports = {
-    onAnonymousDeposit: onAnonymousDeposit,
-    onDeposit: onDeposit,
-    onRefill: onRefill,
-    onTransfer: onTransfer,
     setupWatches: setupWatches
 };
 

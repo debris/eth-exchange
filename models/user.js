@@ -10,6 +10,7 @@ var createIdentity = require('./extensions/createIdentity');
  * identity - exchange identity of the user, should be used to deposit funds
  * balance - total balance of user funds stored on exchange
  * availableBalance - balance of the user that is available for usage (is not in the withdraw process)
+ * role - user access level to the api
  */
 var User = new mongoose.Schema({
     email: String,
