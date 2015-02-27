@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 /**
  * Receipt is used to store data about exchange transfers in database
+ * hash - hash of the transaction
  * identity - identity of the user
  * value - value of transfer, in hex
  * type - type of transfer, can be deposit of withdraw
@@ -12,6 +13,7 @@ var mongoose = require('mongoose');
  * date - date of receipt creation
  */
 var Receipt = new mongoose.Schema({
+    hash: String,
     identity: String,
     value: Number,
     type: {

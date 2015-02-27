@@ -7,16 +7,23 @@ var users = require('./users');
 var web3 = require('./ethereum/web3');
 var receipts = require('./receipts');
 
-var onAnonymousDeposit = function (from, value) {
-
+var onAnonymousDeposit = function (hash, from, value, block) {
+    return receipts.createDepositReceipt(hash, '', value, from, block).then(function (created) {
+        if (created) {
+            return exchange.increaseExchangeBalance(value);
+        }
+    });
 };
 
-var onDeposit = function (from, identity, value, block) {
-    Q.all([
-        users.increaseUserBalance(identity, value),
-        exchange.increaseExchangeBalance(value),
-        receipts.createDepositReceipt(identity, value, from, block)
-    ]);
+var onDeposit = function (hash, from, identity, value, block) {
+    return receipts.createDepositReceipt(hash, identity, value, from, block).then(function (created) {
+        if (created) {
+            return Q.all([
+                users.increaseUserBalance(identity, value),
+                exchange.increaseExchangeBalance(value)
+            ]);
+        }
+    });
 };
 
 var onRefill = function (from, value) {
@@ -27,18 +34,44 @@ var onTransfer = function (from, to, value) {
 
 };
 
-var handleUnhandledEvents = function () {
-    return Q.all([exchange, block]).then(function (arr) {
-        var ex = arr[0];
-        var bl = arr[1];
+var setupPendingWatch = function () {
+    var pendingWatch = web3.eth.watch('pending').then(function () {
+        var number = web3.eth.number;
+        
+        console.log('new block: ' + number);
 
-        return contracts.getInterface(ex.address, config.contract).then(function (contract) {
-            // TODO: setup filter from certain block
-            var watch = web3.eth.watch(contract);
-            var logs = watch.logs();
-            
-            // TODO: iterate over logs
-        });
+        block.updateNumber(number);
+    });
+};
+
+var setupAnonymousDepositWatch = function (contract, block) {
+    var depositWatch = contract.AnonymousDeposit({}, { earliest: Math.max(block.number - 3, 0)});
+    depositWatch.changed(function (res) {
+
+        console.log('anonymous deposit');
+        console.log(JSON.stringify(res, null, 2));
+
+        if (!res.event || !res.args._value) {
+            return;
+        }
+
+        onAnonymousDeposit(res.hash, res.args._from, parseInt(res.args._value), res.number);
+    });
+};
+
+var setupDepositWatch = function (contract, block) {
+
+    var depositWatch = contract.Deposit({}, { earliest: Math.max(block.number - 3, 0)});
+    depositWatch.changed(function (res) {
+
+        console.log('deposit');
+        console.log(JSON.stringify(res, null, 2));
+
+        if (!res.event || !res.args._value) {
+            return;
+        }
+
+        onDeposit(res.hash, res.args._from, res.args._id.slice(2), parseInt(res.args._value), res.number);
     });
 };
 
@@ -48,24 +81,9 @@ var setupWatches = function () {
         var bl = arr[1];
 
         return contracts.getInterface(ex.address, config.contract).then(function (contract) {
-            // TODO: setup filter from certain block
-            var watch = web3.eth.watch(contract);
-            watch.changed(function (res) {
-                // TODO: handle this 
-                console.log('res');
-                console.log(JSON.stringify(res, null, 2));
-            });
-
-            // test only
-            var w2 = contract.Deposit();
-            w2.changed(function (res) {
-                console.log('res2');
-                console.log(JSON.stringify(res, null, 2));
-                if (!res.event) {
-                    return;
-                }
-                onDeposit(res.args._from, res.args._id.slice(2), parseInt(res.args._value), res.number);
-            });
+            setupPendingWatch();
+            setupAnonymousDepositWatch(contract, bl);
+            setupDepositWatch(contract, bl);
         });
     });
 };
@@ -75,7 +93,6 @@ module.exports = {
     onDeposit: onDeposit,
     onRefill: onRefill,
     onTransfer: onTransfer,
-    handleUnhandledEvents: handleUnhandledEvents,
     setupWatches: setupWatches
 };
 
