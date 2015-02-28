@@ -95,6 +95,7 @@ angular.module('eth.Exchange.app').config(['$stateProvider', '$urlRouterProvider
         }
     });
 
-    $urlRouterProvider.otherwise('');
+    $urlRouterProvider.when('', '/account');
+    $urlRouterProvider.otherwise('/account');
 }]);
 

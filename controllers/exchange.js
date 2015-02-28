@@ -4,10 +4,17 @@ var error = require('../services/error');
 var address = function (req, res, next) {
     exchange.get().then(function (exchange) {
         res.send(200, exchange.address);
-    }, error(res));
+    }, error(res)).done();
+};
+
+var get = function (req, res, next) {
+    exchange.get().then(function (exchange) {
+        res.send(200, exchange);
+    }, error(res)).done();
 };
 
 module.exports = {
-    address: address
+    address: address,
+    get: get
 };
 

@@ -7,7 +7,12 @@ angular.module('eth.Exchange.utils').service('exchange', ['$http', function ($ht
         return $http.get('/api/exchange/address');
     };
 
+    var get = function () {
+        return $http.get('/api/admin/exchange');
+    };
+
     return {
+        get: get,
         getAddress: getAddress
     };
 

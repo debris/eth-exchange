@@ -14,6 +14,7 @@ router.post('/receipts/withdraw', auth.authenticateUser, receipts.withdraw);
 router.get('/contracts/interface', auth.authenticateUser, contracts.interface);
 router.get('/exchange/address', auth.authenticateUser, exchange.address);
 
+router.get('/admin/exchange', auth.authenticateAdmin, exchange.get);
 router.get('/admin/receipts', auth.authenticateAdmin, receipts.all);
 router.post('/admin/receipts/accept', auth.authenticateAdmin, receipts.accept);
 

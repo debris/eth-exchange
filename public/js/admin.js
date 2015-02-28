@@ -16,6 +16,16 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
         } 
     });    
 
+    $stateProvider.state('index.exchange', {
+        url: '/exchange',
+        views: {
+            content: {
+                templateUrl: '/static/admin/controllers/exchange/exchange.jade',
+                controller: 'ExchangeCtrl'
+            }
+        }
+    });
+
     $stateProvider.state('index.users', {
         url: '/users',
         views: {
@@ -25,6 +35,7 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
             }
         }
     });
+
     $stateProvider.state('index.receipts', {
         url: '/receipts',
         views: {
@@ -65,7 +76,7 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
             }
         }
     });
-
-    $urlRouterProvider.otherwise('');
+    $urlRouterProvider.when('', '/exchange');
+    $urlRouterProvider.otherwise('/exchange');
 }]);
 
