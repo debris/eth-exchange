@@ -12,7 +12,7 @@
 * node
 * npm
 * mongodb
-* cpp-ethereum (from this [branch](https://github.com/debris/cpp-ethereum/tree/event_hash))
+* cpp-ethereum (from this [branch](https://github.com/debris/cpp-ethereum/tree/event_hash), it's not yet compatible with ethereum poc8 network)
 
 ## Installation
 
@@ -68,6 +68,15 @@ npm start
 ## Configuration
 
 Exchange configuration can be found in [config/config.js](https://github.com/debris/eth-exchange/blob/master/config/config.js).
+
+## Setting admin
+
+You can give admin privilages to user by using [scipts/nominateAdmin.js](https://github.com/debris/eth-exchange/blob/master/scripts/nominateAdmin.js) script.
+
+```bash
+mongo eth-exchange-develop scripts/nominateAdmin.js
+npm start
+```
 
 ## Reseting exchange state
 
