@@ -5,7 +5,9 @@ var date = function (next) {
     if (this.date) {
         return;
     }
-    this.date = new Date(); 
+    this.date = Date.now();
     next();
 };
+
+module.exports = date;
 
