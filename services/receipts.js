@@ -33,24 +33,23 @@ var createWithdrawReceipt = function (hash, value, from, to, block) {
         block: block
     };
 
+    // TODO: handle transactions from outside the exchange
     return Q.ninvoke(Receipt, 'findOneAndUpdate', {
         $or: [{
-            state: 'pending' 
+            state: 'pending',
+            to: to,
+            value: value
         }, {
-            state: 'accepted'
-        }, {
-            state: 'finished',
-            block: block,
-            hash: hash
+            state: 'accepted',
+            to: to,
+            value: value
         }]
     }, {
         $set: udpateObject
     }, {
-        upsert: true,
-        new: false
     }).then(function (object) {
-        // returns true if new receipt was created
-        return object === null;
+        // returns object 
+        return object; 
     });
 };
 

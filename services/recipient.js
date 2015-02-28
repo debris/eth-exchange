@@ -12,7 +12,7 @@ var onAnonymousDeposit = function (hash, from, value, block) {
         if (created) {
             return exchange.increaseExchangeBalance(value);
         }
-    });
+    }).done();
 };
 
 var onDeposit = function (hash, from, identity, value, block) {
@@ -23,7 +23,18 @@ var onDeposit = function (hash, from, identity, value, block) {
                 exchange.increaseExchangeBalance(value)
             ]);
         }
-    });
+    }).done();
+};
+
+var onWithdraw = function (hash, from, to, value, block) {
+    return receipts.createWithdrawReceipt(hash, value, from, to, block).then(function (created) {
+        if (created) {
+            return Q.all([
+                users.decreaseUserBalance(created.identity, value),
+                exchange.decreaseExchangeBalance(value)
+            ]);
+        }
+    }).done();
 };
 
 var onRefill = function (from, value) {
@@ -71,7 +82,6 @@ var setupDepositWatch = function (contract, number) {
             return;
         }
 
-        /// TODO
         onDeposit(res.hash, res.args._from, parseInt(res.args._value), res.number);
     });
 };
@@ -88,8 +98,7 @@ var setupWithdrawWatch = function (contract, number) {
             return;
         }
 
-        onWithdraw(res.hash, res.args._from, res.args._to, res.args._id.slice(2), parseInt(res.args._value), res.number);
-
+        onWithdraw(res.hash, res.args._from, res.args._to, parseInt(res.args._value), res.number);
     });
 };
 
