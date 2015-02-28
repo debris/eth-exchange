@@ -1,5 +1,4 @@
 var Q = require('q');
-var web3 = require('./ethereum/web3');
 var Block = require('../models/block');
 
 var get = function () {
@@ -15,15 +14,15 @@ var findOrCreateBlock = function () {
         console.warn('no block info found in database');
         console.warn('creating new one');
 
-        var number = web3.eth.number;
-
         return Q.ninvoke(Block, 'create', {
-            number: number
+            number: 0
         });
     });
 };
 
 var verifyBlock = function (block) {
+    // TODO: block number cannot be higher than web3.eth.blockNumber
+
     console.log('block number: ' + block.number);
 };
 

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var date = require('./extensions/date');
 
 /**
  * Receipt is used to store data about exchange transfers in database
@@ -28,11 +29,10 @@ var Receipt = new mongoose.Schema({
     from: String,
     to: String,
     block: Number,
-    date: {
-        type: Date,
-        default: Date.now
-    }
+    date: Date
 });
+
+Receipt.pre('save', date);
 
 module.exports = mongoose.model('receipt', Receipt);
 
