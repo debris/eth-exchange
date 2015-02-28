@@ -82,7 +82,7 @@ var setupDepositWatch = function (contract, number) {
             return;
         }
 
-        onDeposit(res.hash, res.args._from, parseInt(res.args._value), res.number);
+        onDeposit(res.hash, res.args._from, res.args._id.slice(2), parseInt(res.args._value), res.number);
     });
 };
 

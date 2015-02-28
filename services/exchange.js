@@ -46,11 +46,13 @@ var setup = function () {
 };
 
 var increaseExchangeBalance = function (value) {
-    return Q.ninvoke(Exchange, 'findOneAndUpdate', {}, {
+    return Q.ninvoke(Exchange, 'findOneAndUpdate', {
     }, {
         $inc: {
             expectedBalance: value 
         }
+    }).then(function (exchange) {
+
     });
 };
 
