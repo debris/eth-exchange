@@ -18,7 +18,7 @@ var createDepositReceipt = function (hash, identity, value, from, block) {
         new: false
     }).then(function (object) {
         // returns true if new receipt was created
-        return object === null;
+        return object === null || object.state !== 'finished';
     });
 };
 

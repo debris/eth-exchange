@@ -5,8 +5,8 @@
 // it clears transactions history from database, reset balances && reset block number
 // exchange should go back to it's previous state with next start
 
-db.users.findAndModify({query: {}, update: { $set: {balance: 0, availableBalance: 0}}});
+db.users.update({}, {$set: { balance: 0, availableBalance: 0 }}, { multi: true })
+db.receipts.update({}, {$set: { state: 'pending' }}, { multi: true })
 db.exchanges.findAndModify({query: {}, update: { $set: {expectedBalance: 0}}})
-db.receipts.findAndModify({query: {}, update: { $set: {state: 'pending'}}});
 db.blocks.remove({});
 

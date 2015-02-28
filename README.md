@@ -69,6 +69,15 @@ npm start
 
 Exchange configuration can be found in [config/config.js](https://github.com/debris/eth-exchange/blob/master/config/config.js).
 
+## Reseting exchange state
+
+At any moment you can reset exchange state and force it to recreate it's state
+
+```bash
+mongo eth-exchange-develop scripts/resetHistory.js
+npm start
+```
+
 ## Debug
 
 You can debug node app using node-inspector

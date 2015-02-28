@@ -51,8 +51,6 @@ var increaseExchangeBalance = function (value) {
         $inc: {
             expectedBalance: value 
         }
-    }).then(function (exchange) {
-
     });
 };
 
