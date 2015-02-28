@@ -1,10 +1,15 @@
 h3 Users
 div
-    ul
-        li(ng-repeat='user in users')
-            a(ui-sref='index.user({id: user._id})') {{user.name}}
-            span &nbsp;
-            a(ui-sref='index.updateUser({create: false, id: user._id})') Edit
+    table
+        tr
+            th: pre Username
+            th: pre Balance
+            th: pre Available balance
+        tr(ng-repeat='user in users')
+            td: a(ui-sref='index.user({id: user._id})'): pre {{user.name}}
+            td: a: pre {{user.balance}}
+            td: a: pre {{user.availableBalance}}
+
 div
     a(ui-sref='index.updateUser({create: true})') Create
 

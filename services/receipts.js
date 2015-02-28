@@ -45,7 +45,7 @@ var createWithdrawReceipt = function (hash, value, from, to, block) {
             value: value
         }]
     }, {
-        $set: udpateObject
+        $set: updateObject 
     }, {
     }).then(function (object) {
         // returns object 

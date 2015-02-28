@@ -1,4 +1,4 @@
-h3 History
+h3 Receipts
 div
     table
         tr
@@ -9,7 +9,8 @@ div
             th: a(href='', ng-click='predicate="to"; reverse=!reverse'): pre To
             th: a(href='', ng-click='predicate="block"; reverse=!reverse'): pre Block
             th: a(href='', ng-click='predicate="date"; reverse=!reverse'): pre Date
-        tr(ng-repeat='receipt in history.receipts | orderBy:predicate:reverse')
+            th: a: pre accept
+        tr(ng-repeat='receipt in receipts | orderBy:predicate:reverse')
             td: pre {{receipt.value}}
             td: pre {{receipt.type}}
             td: pre {{receipt.state}}
@@ -17,4 +18,4 @@ div
             td: pre {{receipt.to}}
             td: pre {{receipt.block}}
             td: pre {{receipt.date}}
-
+            td: a(href='', ng ng-click='accept(receipt)', ng-if='receipt.state === "pending"'): pre accept

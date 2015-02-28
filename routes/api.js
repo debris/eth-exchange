@@ -11,9 +11,11 @@ var generic = require('../controllers/generic');
 router.get('/user', auth.authenticateUser, users.current);
 router.get('/receipts', auth.authenticateUser, receipts.list);
 router.post('/receipts/withdraw', auth.authenticateUser, receipts.withdraw);
-router.post('/receipts/accept', auth.authenticateAdmin, receipts.accept);
 router.get('/contracts/interface', auth.authenticateUser, contracts.interface);
 router.get('/exchange/address', auth.authenticateUser, exchange.address);
+
+router.get('/admin/receipts', auth.authenticateAdmin, receipts.all);
+router.post('/admin/receipts/accept', auth.authenticateAdmin, receipts.accept);
 
 router.get('/:model', auth.authenticateAdmin, generic.list);
 router.get('/:model/:key/:id', auth.authenticateAdmin, generic.get);

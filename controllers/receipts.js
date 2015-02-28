@@ -3,6 +3,12 @@ var Receipt = require('../models/receipt');
 var error = require('../services/error');
 var interface = require('../services/interface');
 
+var all = function (req, res, next) {
+    return Q.ninvoke(Receipt, 'find', {}).then(function (receipts) {
+        res.send(200, receipts);
+    }, error(res)).done();
+};
+
 var list = function (req, res, next) {
     return Q.ninvoke(Receipt, 'find', {
         identity: req.user.identity
@@ -48,6 +54,7 @@ var accept = function (req, res, next) {
 };
 
 module.exports = {
+    all: all,
     list: list,
     withdraw: withdraw,
     accept: accept

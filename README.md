@@ -12,7 +12,7 @@
 * node
 * npm
 * mongodb
-* cpp-ethereum
+* cpp-ethereum (from this [branch](https://github.com/debris/cpp-ethereum/tree/event_hash))
 
 ## Installation
 

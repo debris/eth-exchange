@@ -8,13 +8,9 @@ div
     pre YOUR ACCOUNTS
     table
         tr
-            th
-                pre ADDRESS
-            th 
-                pre BALANCE
+            th: pre ADDRESS
+            th: pre BALANCE
         tr(ng-repeat='acc in account.accounts')
-            td 
-                pre {{acc.address}}
-            td 
-                pre {{acc.balance}}
+            td: pre {{acc.address}}
+            td: pre {{acc.balance}}
 
