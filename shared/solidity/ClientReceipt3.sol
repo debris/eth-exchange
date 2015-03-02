@@ -79,11 +79,11 @@ contract ClientReceipt is owned, killswitch {
 	Refill(msg.sender, msg.value);
   }
   function withdraw(address _to, uint _value) restricted {
-	_to.call.value(_value)();
+    _to.send(_value);
 	Withdraw(msg.sender, _to, _value);
   }
   function drain(address _to, uint _value) restricted {
-	_to.call.value(_value)();
+    _to.send(_value);
 	Drain(msg.sender, _to, _value);
   }
 }
