@@ -1,0 +1,204 @@
+[
+   {
+      "constant" : false,
+      "inputs" : [],
+      "name" : "close",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_keyholder",
+            "type" : "address"
+         },
+         {
+            "name" : "_executive",
+            "type" : "address"
+         }
+      ],
+      "name" : "nominate",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [],
+      "name" : "refill",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_id",
+            "type" : "hash256"
+         }
+      ],
+      "name" : "deposit",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_to",
+            "type" : "address"
+         },
+         {
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "drain",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_to",
+            "type" : "address"
+         },
+         {
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "withdraw",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [],
+      "name" : "open",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "AnonymousDeposit",
+      "type" : "event"
+   },
+   {
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_id",
+            "type" : "hash256"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Deposit",
+      "type" : "event"
+   },
+   {
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Refill",
+      "type" : "event"
+   },
+   {
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : true,
+            "name" : "_to",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Withdraw",
+      "type" : "event"
+   },
+   {
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : true,
+            "name" : "_to",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Drain",
+      "type" : "event"
+   },
+   {
+      "inputs" : [
+         {
+            "indexed" : false,
+            "name" : "keyholder",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "executive",
+            "type" : "address"
+         }
+      ],
+      "name" : "NomineesChanged",
+      "type" : "event"
+   },
+   {
+      "inputs" : [],
+      "name" : "BoxOpened",
+      "type" : "event"
+   },
+   {
+      "inputs" : [],
+      "name" : "BoxClosed",
+      "type" : "event"
+   }
+]
