@@ -7,10 +7,16 @@ var users = require('./users');
 var web3 = require('./ethereum/web3');
 var receipts = require('./receipts');
 
+var logExchangeBalance = function (exchange) {
+    var balance = web3.eth.balanceAt(exchange.address);
+    console.log("blockchain exchange balance: ", web3.toDecimal(balance));
+    return exchange;
+};
+
 var onAnonymousDeposit = function (hash, from, value, block) {
     return receipts.createDepositReceipt(hash, '', value, from, block).then(function (created) {
         if (created) {
-            return exchange.increaseExchangeBalance(value);
+            return exchange.increaseExchangeBalance(value)
         }
     }).done();
 };
@@ -31,7 +37,7 @@ var onWithdraw = function (hash, from, to, value, block) {
         if (created) {
             return Q.all([
                 users.decreaseUserBalance(created.identity, value),
-                exchange.decreaseExchangeBalance(value)
+                exchange.decreaseExchangeBalance(value).then(logExchangeBalance)
             ]);
         }
     }).done();
@@ -52,6 +58,7 @@ var setupPendingWatch = function () {
         console.log('new block: ' + number);
 
         block.updateNumber(number);
+        exchange.get().then(logExchangeBalance);
     });
 };
 
