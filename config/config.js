@@ -16,19 +16,19 @@ var config = {
         port: port || 2000,
         db: 'mongodb://' + mongoHost + '/eth-exchange-develop',
         assetsPrice: 200,
-        contract: 'ClientReceipt2'
+        contract: 'ClientReceipt3'
     },
     production: {
         port: port || 3000,
         db: 'mongodb://' + mongoHost + '/eth-exchange-production',
         assetsPrice: 1000,
-        contract: 'ClientReceipt2'
+        contract: 'ClientReceipt3'
     },
     test: {
         port: port || 3001,
         db: 'mongodb://' + mongoHost + '/eth-exchange-test',
         assetsPrice: 2000,
-        contract: 'ClientReceipt2'
+        contract: 'ClientReceipt3'
     }
 };
 

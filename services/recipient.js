@@ -88,7 +88,7 @@ var setupDepositWatch = function (contract, number) {
 
 var setupWithdrawWatch = function (contract, number) {
     
-    var withdrawWatch = contract.Transfer({}, { earliest: number });
+    var withdrawWatch = contract.Withdraw({}, { earliest: number });
     withdrawWatch.changed(function (res) {
     
         console.log('withdraw');

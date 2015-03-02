@@ -7,18 +7,23 @@ var mongoose = require('mongoose');
  * expectedBalance - the balance that should be on exchange hotwallet according to registred receipts
  * open - is true if exchange hotwallet is open
  * keyholder - exchange keyholder
- * executive - exchange executive
+ * executive - exchange executive,
+ * refill - exchange balance on which it should be refilled
+ * drain - exchange balance on which it should be drained to coldwallet
  */
 var Exchange = new mongoose.Schema({
     address: String,
     owner: String,
-    expectedBalance: {
+    balance: {
         type: Number,
         default: 0
     },
     open: Boolean,
     keyholder: String,
-    executive: String
+    executive: String,
+    refill: Number,
+    drain: Number,
+    needsRefill: Boolean
 });
 
 module.exports = mongoose.model('exchange', Exchange);

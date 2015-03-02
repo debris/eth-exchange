@@ -6,6 +6,7 @@ var users = require('../controllers/users');
 var receipts = require('../controllers/receipts');
 var contracts = require('../controllers/contracts');
 var exchange = require('../controllers/exchange');
+var coldwallet = require('../controllers/coldwallets');
 var generic = require('../controllers/generic');
 
 router.get('/user', auth.authenticateUser, users.current);
@@ -17,6 +18,9 @@ router.get('/exchange/address', auth.authenticateUser, exchange.address);
 router.get('/admin/exchange', auth.authenticateAdmin, exchange.get);
 router.get('/admin/receipts', auth.authenticateAdmin, receipts.all);
 router.post('/admin/receipts/accept', auth.authenticateAdmin, receipts.accept);
+router.get('/admin/coldwallets', auth.authenticateAdmin, coldwallet.all);
+router.post('/admin/coldwallets', auth.authenticateAdmin, coldwallet.create);
+router.post('admin/coldwallets/:colwallet', auth.authenticateAdmin, coldwallet.update);
 
 router.get('/:model', auth.authenticateAdmin, generic.list);
 router.get('/:model/:key/:id', auth.authenticateAdmin, generic.get);

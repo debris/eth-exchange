@@ -20,7 +20,7 @@ var Receipt = new mongoose.Schema({
     value: Number,
     type: {
         type: String,
-        enum: ['deposit', 'withdraw']
+        enum: ['deposit', 'withdraw', 'drain', 'refill']
     },
     state: {
         type: String,

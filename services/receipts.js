@@ -1,15 +1,15 @@
 var Q = require('q');
 var Receipt = require('../models/receipt');
 
-var createDepositReceipt = function (hash, identity, value, from, block) {
+var createIncomesReceipt = function (hash, value, from, block, type, identity) {
     return Q.ninvoke(Receipt, 'findOneAndUpdate', {
         block: block,
         hash: hash
     }, {
         hash: hash,
-        identity: identity,
+        identity: identity || '',
         value: value,
-        type: 'deposit',
+        type: type, 
         state: 'finished',
         from: from,
         block: block
@@ -22,11 +22,11 @@ var createDepositReceipt = function (hash, identity, value, from, block) {
     });
 };
 
-var createWithdrawReceipt = function (hash, value, from, to, block) {
+var createOutgoesReceipt = function (hash, value, from, to, block, type) {
     var updateObject = {
         hash: hash,
         value: value,
-        type: 'withdraw',
+        type: type,
         state: 'finished',
         from: from,
         to: to,
@@ -53,8 +53,26 @@ var createWithdrawReceipt = function (hash, value, from, to, block) {
     });
 };
 
+var createDepositReceipt = function (hash, identity, value, from, block) {
+    return createIncomesReceipt(hash, value, from, block, 'deposit', identity);
+};
+
+var createRefillReceipt = function (hash, value, from, block) {
+    return createIncomesReceipt(hash, value, from, block, 'refill');
+};
+
+var createWithdrawReceipt = function (hash, value, from, to, block) {
+    return createOutgoesReceipt(hash, value, from, to, block, 'withdraw');
+};
+
+var createDrainReceipt = function (hash, value, from, to, block) {
+    return createOutgoesReceipt(hash, value, from, to, block, 'drain');
+};
+
 module.exports = {
     createDepositReceipt: createDepositReceipt,
+    createWithdrawReceipt: createWithdrawReceipt,
+    createRefillReceipt: createRefillReceipt,
     createWithdrawReceipt: createWithdrawReceipt
 };
 

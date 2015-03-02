@@ -46,7 +46,7 @@ var accept = function (req, res, next) {
     }).then(function (receipt) {
         // transfer money here
         return interface.get().then(function (contract) {
-            contract.transfer(receipt.to, receipt.value);
+            contract.withdraw(receipt.to, receipt.value);
         });
     }).then(function () {
         res.send(200);     
