@@ -81,7 +81,7 @@ var decreaseExchangeBalance = function (value) {
 };
 
 var needsRefill = function (needs) {
-    return Q.ninvoke(Echange, 'findOneAndUpdate', {
+    return Q.ninvoke(Exchange, 'findOneAndUpdate', {
         needsRefill: !needs
     }, {
         $set: {
@@ -95,11 +95,21 @@ var needsRefill = function (needs) {
     });
 };
 
+var updateThresholds = function (refill, drain) {
+    return Q.ninvoke(Exchange, 'findOneAndUpdate', {}, {
+        $set: {
+            refill: refill,
+            drain: drain
+        }
+    });
+};
+
 module.exports = {
     setup: setup,
     get: get,
     increaseExchangeBalance: increaseExchangeBalance,
     decreaseExchangeBalance: decreaseExchangeBalance,
-    needsRefill: needsRefill
+    needsRefill: needsRefill,
+    updateThresholds: updateThresholds
 };
 

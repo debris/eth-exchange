@@ -6,11 +6,24 @@ var interface = require('./interface');
 var users = require('./users');
 var web3 = require('./ethereum/web3');
 var receipts = require('./receipts');
+var mailer = require('./mailer');
 
 var logExchangeBalance = function (exchange) {
     var balance = web3.eth.balanceAt(exchange.address);
     console.log("blockchain exchange balance: ", web3.toDecimal(balance));
     return exchange;
+};
+
+var mailUserOnDeposit = function (value) {
+    return function (user) {
+        return mailer.sendMail(user.email, 'Deposit', 'Thank you for depositing ' + value + 'ETH on eth-exchange');
+    };
+};
+
+var mailUserOnWithdraw = function (value) {
+    return function (user) {
+        return mailer.sendMail(user.email, 'Withdraw', 'You withdrawn ' + value + 'ETH. Thank you for using eth-exchange');
+    };
 };
 
 var onAnonymousDeposit = function (hash, from, value, block) {
@@ -25,7 +38,7 @@ var onDeposit = function (hash, from, identity, value, block) {
     return receipts.createDepositReceipt(hash, identity, value, from, block).then(function (created) {
         if (created) {
             return Q.all([
-                users.increaseUserBalance(identity, value),
+                users.increaseUserBalance(identity, value).then(mailUserOnDeposit(value)),
                 exchange.increaseExchangeBalance(value)
             ]);
         }
@@ -36,7 +49,7 @@ var onWithdraw = function (hash, from, to, value, block) {
     return receipts.createWithdrawReceipt(hash, value, from, to, block).then(function (created) {
         if (created) {
             return Q.all([
-                users.decreaseUserBalance(created.identity, value),
+                users.decreaseUserBalance(created.identity, value).then(mailUserOnWithdraw(value)),
                 exchange.decreaseExchangeBalance(value).then(logExchangeBalance)
             ]);
         }
@@ -109,6 +122,36 @@ var setupWithdrawWatch = function (contract, number) {
     });
 };
 
+var setupDrainWatch = function (contract, number) {
+
+    var drainWatch = contract.Drain({}, { earliest: number });
+    drainWatch.changed(function (res) {
+
+        console.log('drain');
+        console.log(JSON.stringify(res, null, 2));
+
+        if (!res.event || !res.args._value) {
+            return;
+        }
+        
+    });
+};
+
+var setupRefillWatch = function (contract, number) {
+
+    var refillWatch = contract.Refill({}, { earliest: number });
+    refillWatch.changed(function (res) {
+
+        console.log('refill');
+        console.log(JSON.stringify(res, null, 2));
+
+        if (!res.event || !res.args._value) {
+            return;
+        }
+        
+    });
+};
+
 var setupWatches = function () {
     return Q.all([interface.get(), block.get()]).then(function (arr) {
         var contract = arr[0];
@@ -119,6 +162,8 @@ var setupWatches = function () {
         setupAnonymousDepositWatch(contract, number);
         setupDepositWatch(contract, number);
         setupWithdrawWatch(contract, number);
+        setupDrainWatch(contract, number);
+        setupRefillWatch(contract, number);
     });
 };
 

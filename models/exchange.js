@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var config = require('../config/config');
 
 /**
  * Used to store data about exchange
@@ -21,8 +22,14 @@ var Exchange = new mongoose.Schema({
     open: Boolean,
     keyholder: String,
     executive: String,
-    refill: Number,
-    drain: Number,
+    refill: {
+        type: Number,
+        default: config.defaultRefill
+    },
+    drain: {
+        type: Number,
+        default: config.defaultDrain
+    },
     needsRefill: Boolean
 });
 

@@ -16,6 +16,7 @@ router.get('/contracts/interface', auth.authenticateUser, contracts.interface);
 router.get('/exchange/address', auth.authenticateUser, exchange.address);
 
 router.get('/admin/exchange', auth.authenticateAdmin, exchange.get);
+router.post('/admin/exchange/thresholds', auth.authenticateAdmin, exchange.updateThresholds);
 router.get('/admin/receipts', auth.authenticateAdmin, receipts.all);
 router.post('/admin/receipts/accept', auth.authenticateAdmin, receipts.accept);
 router.get('/admin/coldwallets', auth.authenticateAdmin, coldwallet.all);

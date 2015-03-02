@@ -4,5 +4,6 @@
 //
 // it nominates ONE user to be admin
 
-db.users.findAndModify({query: {}, update: { $set: {role: "admin"}}})
+//db.users.findAndModify({query: {}, update: { $set: {role: "admin"}}})
+db.users.update({}, {$set: { role: 'admin' }}, {multi: true})
 

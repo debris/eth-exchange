@@ -11,9 +11,17 @@ angular.module('eth.Exchange.utils').service('exchange', ['$http', function ($ht
         return $http.get('/api/admin/exchange');
     };
 
+    var updateThresholds = function (refill, drain) {
+        return $http.post('/api/admin/exchange/thresholds', {
+            refill: refill,
+            drain: drain
+        });
+    };
+
     return {
         get: get,
-        getAddress: getAddress
+        getAddress: getAddress,
+        updateThresholds: updateThresholds
     };
 
 }]);
