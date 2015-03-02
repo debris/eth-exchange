@@ -78,7 +78,7 @@ contract ClientReceipt is owned, killswitch {
 	Refill(msg.sender, msg.value);
   }
   function transfer(address _to, uint _value) restricted {
-	_to.call.value(_value)();
+	_to.send(_value);
 	Transfer(msg.sender, _to, _value);
   }
 }
