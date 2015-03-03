@@ -8,7 +8,10 @@ var mongoose = require('mongoose');
  */
 var Coldwallet = new mongoose.Schema({
     address: String,
-    expectedBalance: Number,
+    expectedBalance: {
+        type: Number,
+        default: 0
+    },
     maxBalance: {
         type: Number,
         default: 0

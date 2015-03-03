@@ -20,13 +20,12 @@ var check = function () {
             }
 
             return exchange.needsDrain(true).then(function (changed) {
-                if (!changed) {
-                    return;
-                }
-
                 return coldwallets.getColdwalletForDrain().then(function (coldwallet) {
 
                     if (!coldwallet) {
+                        if (!changed) {
+                            return;
+                        }
                         return mailer.sendMailToAdmins('Drain', 'Exchange needs to drain ' + value + 'ETH, but there is no coldwallet available');
                     }
 
@@ -47,7 +46,7 @@ var check = function () {
                         }
                     
                         return interface.get().then(function (contract) {
-                            contract.drain(coldwallet.to, value);
+                            contract.drain(coldwallet.address, value);
                         }).then(function () {
                             return mailer.sendMailToAdmins('Drain', 'Started drain from hotwallet. Draining ' + value + 'ETH.');
                         });

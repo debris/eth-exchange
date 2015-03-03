@@ -8,6 +8,7 @@ var web3 = require('./ethereum/web3');
 var receipts = require('./receipts');
 var mailer = require('./mailer');
 var supervisor = require('./supervisor');
+var coldwallets = require('./coldwallets');
 
 var logExchangeBalance = function (exchange) {
     var balance = web3.eth.balanceAt(exchange.address);
@@ -73,7 +74,8 @@ var onRefill = function (hash, from, value, block) {
     return receipts.createRefillReceipt(hash, value, from, block).then(function (created) {
         if (created) {
             return Q.all([
-                exchange.increaseExchangeBalance(value).then(mailAdminsOnRefill(value))
+                exchange.increaseExchangeBalance(value).then(mailAdminsOnRefill(value)),
+                coldwallets.decreaseColdwalletBalance(to, value)
             ]);
         }
     }).done();
@@ -83,7 +85,8 @@ var onDrain = function (hash, from, to, value, block) {
     return receipts.createDrainReceipt(hash, value, from, to, block).then(function (created) {
         if (created) {
             return Q.all([
-                exchange.decreaseExchangeBalance(value).then(mailAdminsOnDrain(value))
+                exchange.decreaseExchangeBalance(value).then(mailAdminsOnDrain(value)),
+                coldwallets.increaseColdwalletBalance(to, value)
             ]);
         }
     }).done();
@@ -160,7 +163,7 @@ var setupDrainWatch = function (contract, number) {
             return;
         }
 
-        onDrain(res.hash, res.args._from. res.args._to, parseInt(res.args._value), res.number);
+        onDrain(res.hash, res.args._from, res.args._to, parseInt(res.args._value), res.number);
     });
 };
 

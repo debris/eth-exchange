@@ -11,7 +11,7 @@ var all = function (req, res, next) {
 var create = function (req, res, next) {
     return Q.ninvoke(Coldwallet, 'create', req.body).then(function (coldwallet) {
         res.send(200); 
-    }, errro(res)).done();
+    }, error(res)).done();
 };
 
 var update = function (req, res, next) {

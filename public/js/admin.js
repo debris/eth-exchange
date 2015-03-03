@@ -56,6 +56,16 @@ angular.module('eth.Exchange.admin').config(['$stateProvider', '$urlRouterProvid
             }
         }
     });
+    
+    $stateProvider.state('index.coldwallets', {
+        url: '/coldwallets',
+        views: {
+            content: {
+                templateUrl: '/static/admin/controllers/coldwallets/coldwallets.jade',
+                controller: 'ColdwalletsCtrl'
+            }
+        }
+    });
 
     $stateProvider.state('index.settings', {
         url: '/settings',

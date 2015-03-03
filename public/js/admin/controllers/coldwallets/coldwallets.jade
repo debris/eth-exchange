@@ -1,0 +1,27 @@
+h3 coldwallets
+div(ng-if='coldwallets.length')
+    table
+        tr
+            th: a(href='', ng-click='predicate="address"; reverse=!reverse'): pre Address
+            th: a(href='', ng-click='predicate="expectedBalance"; reverse=!reverse'): pre Expected Balance
+            th: a(href='', ng-click='predicate="maxBalance"; reverse=!reverse'): pre Max Balance
+            th: a: pre Edit
+        tr(ng-repeat='wallet in coldwallets | orderBy:predicate:reverse')
+            td: pre {{wallet.address}}
+            td: pre {{wallet.expectedBalance}}
+            td: pre {{wallet.maxBalance}}
+div
+    h4 new coldwallet:
+    form(name='coldwalletForm', ng-submit='newColdwallet()')
+        div
+            label Address
+            span &nbsp;
+            input(ng-model='newWallet.address', name='address', type='text')
+        div
+            label Max Value
+            span &nbsp;
+            input(ng-model='newWallet.maxBalance', name='address', type='text')
+        div
+            input(type='submit', value='Submit')
+
+
