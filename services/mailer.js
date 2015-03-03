@@ -1,6 +1,7 @@
 var Q = require('q');
 var nodemailer = require('nodemailer');
 var config = require('../config/config');
+var users = require('./users');
 
 var transporter;
 if (config.mail &&
@@ -39,7 +40,16 @@ var sendMail = function (to, subject, message) {
     });
 };
 
+var sendMailToAdmins = function (subject, messsage) {
+    return users.getAdmins().then(function (admins) {
+        admins.foEach(function (admin) {
+            sendMail(admin.email, subject, message);
+        });
+    });
+};
+
 module.exports = {
-    sendMail: sendMail
+    sendMail: sendMail,
+    sendMailToAdmins: sendMailToAdmins
 };
 

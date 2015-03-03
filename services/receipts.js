@@ -73,6 +73,6 @@ module.exports = {
     createDepositReceipt: createDepositReceipt,
     createWithdrawReceipt: createWithdrawReceipt,
     createRefillReceipt: createRefillReceipt,
-    createWithdrawReceipt: createWithdrawReceipt
+    createDrainReceipt: createDrainReceipt
 };
 

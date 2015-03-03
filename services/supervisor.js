@@ -22,7 +22,7 @@ var check = function () {
             return coldwallets.getColdwalletForDrain().then(function (coldwallet) {
 
                 if (!coldwallet) {
-                    return;
+                    return mailer.sendMailToAdmins('Drain', 'Exchange needs to drain ' + value + 'ETH, but there is no coldwallet available');
                 }
 
                 return Q.ninvoke(Receipt, 'findOneAndUpdate', {
@@ -44,11 +44,7 @@ var check = function () {
                     return interface.get().then(function (contract) {
                         contract.drain(coldwallet.to, value);
                     }).then(function () {
-                        return users.getAdmins(); 
-                    }).then(function (admins) {
-                        admins.forEach(function (admin) {
-                            mailer.sendMail(admin.email, 'Drain', 'Started drain from hotwallet. Draining ' + value + 'ETH.');
-                        }); 
+                        return mailer.sendMailToAdmins('Drain', 'Started drain from hotwallet. Draining ' + value + 'ETH.');
                     });
                 });
             }); 
@@ -56,11 +52,7 @@ var check = function () {
             return exchange.needsRefill(true).then(function (changed) {
                 if (changed) {
                     // send email or do whatever else if it needs refill
-                    return users.getAdmins().then(function (admins) {
-                        admins.forEach(function (admin) {
-                            mailer.sendMail(admin.email, 'Refill', 'Exchange needs to be refilled.');
-                        });
-                    });
+                    return mailer.sendMailToAdmins('Refill', 'Exchange needs to be refilled.');
                 }
             });
         } else {

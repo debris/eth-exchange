@@ -27,6 +27,18 @@ var mailUserOnWithdraw = function (value) {
     };
 };
 
+var mailAdminsOnRefill = function (value) {
+    return function () {
+        return mailer.sendMailToAdmins('Refill', 'Refill of ' + value + 'ETH finished');
+    };
+};
+
+var mailAdminsOnDrain = function (value) {
+    return function () {
+        return mailer.sendMailToAdmins('Drain', 'Drain of ' + value + 'ETH finished');
+    };
+};
+
 var onAnonymousDeposit = function (hash, from, value, block) {
     return receipts.createDepositReceipt(hash, '', value, from, block).then(function (created) {
         if (created) {
@@ -51,18 +63,30 @@ var onWithdraw = function (hash, from, to, value, block) {
         if (created) {
             return Q.all([
                 users.decreaseUserBalance(created.identity, value).then(mailUserOnWithdraw(value)),
-                exchange.decreaseExchangeBalance(value).then(logExchangeBalance)
+                exchange.decreaseExchangeBalance(value)
             ]);
         }
     }).done();
 };
 
-var onRefill = function (from, value) {
-
+var onRefill = function (hash, from, value, block) {
+    return receipts.createRefillReceipt(hash, value, from, block).then(function (created) {
+        if (created) {
+            return Q.all([
+                exchange.increaseExchangeBalance(value).then(mailAdminsOnRefill(value))
+            ]);
+        }
+    }).done();
 };
 
-var onTransfer = function (from, to, value) {
-
+var onDrain = function (hash, from, to, value, block) {
+    return receipts.createDrainReceipt(hash, value, from, to, block).then(function (created) {
+        if (created) {
+            return Q.all([
+                exchange.decreaseExchangeBalance(value).then(mailAdminsOnDrain(value))
+            ]);
+        }
+    }).done();
 };
 
 var setupPendingWatch = function () {
@@ -135,7 +159,8 @@ var setupDrainWatch = function (contract, number) {
         if (!res.event || !res.args._value) {
             return;
         }
-        
+
+        onDrain(res.hash, res.args._from. res.args._to, parseInt(res.args._value), res.number);
     });
 };
 
@@ -150,7 +175,8 @@ var setupRefillWatch = function (contract, number) {
         if (!res.event || !res.args._value) {
             return;
         }
-        
+
+        onRefill(res.hash, res.args._from, parseInt(res.args._value), res.number);
     });
 };
 
