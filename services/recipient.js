@@ -7,6 +7,7 @@ var users = require('./users');
 var web3 = require('./ethereum/web3');
 var receipts = require('./receipts');
 var mailer = require('./mailer');
+var supervisor = require('./supervisor');
 
 var logExchangeBalance = function (exchange) {
     var balance = web3.eth.balanceAt(exchange.address);
@@ -70,8 +71,9 @@ var setupPendingWatch = function () {
         
         console.log('new block: ' + number);
 
-        block.updateNumber(number);
-        exchange.get().then(logExchangeBalance);
+        block.updateNumber(number).done();
+        exchange.get().then(logExchangeBalance).done();
+        supervisor.check().done();
     });
 };
 

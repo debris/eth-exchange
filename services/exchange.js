@@ -91,7 +91,7 @@ var needsRefill = function (needs) {
         new: false
     }).then(function (exchange) {
         // return true if state has changed
-        return exchange.needsRefill !== needs;
+        return exchange !== null && exchange.needsRefill !== needs;
     });
 };
 

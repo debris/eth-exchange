@@ -15,7 +15,7 @@ var config = require('../config/config');
 var Exchange = new mongoose.Schema({
     address: String,
     owner: String,
-    balance: {
+    expectedBalance: {
         type: Number,
         default: 0
     },
@@ -30,7 +30,10 @@ var Exchange = new mongoose.Schema({
         type: Number,
         default: config.defaultDrain
     },
-    needsRefill: Boolean
+    needsRefill: {
+        type: Boolean,
+        default: false
+    }
 });
 
 module.exports = mongoose.model('exchange', Exchange);

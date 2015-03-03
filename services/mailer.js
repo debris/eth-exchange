@@ -34,12 +34,8 @@ var sendMail = function (to, subject, message) {
     return Q.ninvoke(transporter, 'sendMail', {
         from: config.mail.username,
         to: to,
+        subject: subject,
         text: message
-    }).then(function (res) {
-        console.log('sent!');
-    }, function (err) {
-        console.error('error!');
-        console.error(err); 
     });
 };
 

@@ -16,8 +16,15 @@ var decreaseUserBalance = function (identity, value) {
     return increaseUserBalance(identity, -value);
 };
 
+var getAdmins = function () {
+    return Q.ninvoke(User, 'find', {
+        role: 'admin'
+    });
+};
+
 module.exports = {
     increaseUserBalance: increaseUserBalance,
-    decreaseUserBalance: decreaseUserBalance 
+    decreaseUserBalance: decreaseUserBalance,
+    getAdmins: getAdmins
 };
 

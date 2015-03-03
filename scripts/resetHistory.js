@@ -8,5 +8,6 @@
 db.users.update({}, {$set: { balance: 0, availableBalance: 0 }}, { multi: true })
 db.receipts.update({}, {$set: { state: 'pending' }}, { multi: true })
 db.exchanges.findAndModify({query: {}, update: { $set: {expectedBalance: 0}}})
+db.coldwallets.update({}, {$set: { expectedBalance: 0}})
 db.blocks.remove({});
 

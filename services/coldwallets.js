@@ -23,7 +23,7 @@ var getColdwalletForDrain = function () {
     }), 'sort', '-maxBalance');
 };
 
-modulel.exports = {
+module.exports = {
     increaseColdwalletBalance: increaseColdwalletBalance,
     decreaseColdwalletBalance: decreaseColdwalletBalance,
     getColdwalletForDrain: getColdwalletForDrain
