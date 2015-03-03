@@ -40,9 +40,9 @@ var sendMail = function (to, subject, message) {
     });
 };
 
-var sendMailToAdmins = function (subject, messsage) {
+var sendMailToAdmins = function (subject, message) {
     return users.getAdmins().then(function (admins) {
-        admins.foEach(function (admin) {
+        admins.forEach(function (admin) {
             sendMail(admin.email, subject, message);
         });
     });

@@ -1,2 +1,13 @@
 h3 Settings
+form(name='settingsForm', ng-submit='save()')
+    div
+        label Refill Balance
+        span &nbsp;
+        input(ng-model='settings.refill', name='refill', type='number')
+    div
+        label Drain Balance
+        span &nbsp;
+        input(ng-model='settings.drain', name='drain', type='number')
+    div
+        input(type='submit', value='Submit')
     

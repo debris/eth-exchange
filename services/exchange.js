@@ -85,13 +85,39 @@ var needsRefill = function (needs) {
         needsRefill: !needs
     }, {
         $set: {
-            needsRefill: needs
+            needsRefill: needs,
+            needsDrain: false
         }
     }, {
         new: false
     }).then(function (exchange) {
         // return true if state has changed
         return exchange !== null && exchange.needsRefill !== needs;
+    });
+};
+
+var needsDrain = function (needs) {
+    return Q.ninvoke(Exchange, 'findOneAndUpdate', {
+        needsDrain: !needs
+    }, {
+        $set: {
+            needsDrain: needs,
+            needsRefill: false
+        }
+    }, {
+        new: false
+    }).then(function (exchange) {
+        // return true if state has changed
+        return exchange !== null && exchange.needsDrain !== needs;
+    });
+};
+
+var noDrainNoRefill = function () {
+    return Q.ninvoke(Exchange, 'findOneAndUpdate', {}, {
+        $set: {
+            needsRefill: false,
+            needsDrain: false
+        }
     });
 };
 
@@ -110,6 +136,8 @@ module.exports = {
     increaseExchangeBalance: increaseExchangeBalance,
     decreaseExchangeBalance: decreaseExchangeBalance,
     needsRefill: needsRefill,
+    needsDrain: needsDrain,
+    noDrainNoRefill: noDrainNoRefill,
     updateThresholds: updateThresholds
 };
 

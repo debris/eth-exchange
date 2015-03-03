@@ -15,48 +15,55 @@ var check = function () {
         if (ex.expectedBalance > ex.drain) {
             // TODO mark needsRefill to false also here!?
             var value = ex.expectedBalance - perfectBalance(ex);
-            if (!value) {
+            if (value <= 0) {
                 return;
             }
 
-            return coldwallets.getColdwalletForDrain().then(function (coldwallet) {
-
-                if (!coldwallet) {
-                    return mailer.sendMailToAdmins('Drain', 'Exchange needs to drain ' + value + 'ETH, but there is no coldwallet available');
+            return exchange.needsDrain(true).then(function (changed) {
+                if (!changed) {
+                    return;
                 }
 
-                return Q.ninvoke(Receipt, 'findOneAndUpdate', {
-                    type: 'drain',
-                    state: 'accepted'
-                }, {
-                    type: 'drain',
-                    state: 'accepted',
-                    value: value,
-                    to: coldwallet.address
-                }, {
-                    upsert: true,
-                    new: false
-                }).then(function (old) {
-                    if (old) {
-                        return;
+                return coldwallets.getColdwalletForDrain().then(function (coldwallet) {
+
+                    if (!coldwallet) {
+                        return mailer.sendMailToAdmins('Drain', 'Exchange needs to drain ' + value + 'ETH, but there is no coldwallet available');
                     }
-                
-                    return interface.get().then(function (contract) {
-                        contract.drain(coldwallet.to, value);
-                    }).then(function () {
-                        return mailer.sendMailToAdmins('Drain', 'Started drain from hotwallet. Draining ' + value + 'ETH.');
+
+                    return Q.ninvoke(Receipt, 'findOneAndUpdate', {
+                        type: 'drain',
+                        state: 'accepted'
+                    }, {
+                        type: 'drain',
+                        state: 'accepted',
+                        value: value,
+                        to: coldwallet.address
+                    }, {
+                        upsert: true,
+                        new: false
+                    }).then(function (old) {
+                        if (old) {
+                            return;
+                        }
+                    
+                        return interface.get().then(function (contract) {
+                            contract.drain(coldwallet.to, value);
+                        }).then(function () {
+                            return mailer.sendMailToAdmins('Drain', 'Started drain from hotwallet. Draining ' + value + 'ETH.');
+                        });
                     });
-                });
-            }); 
+                }); 
+            });
         } else if (ex.expectedBalance < ex.refill) {
             return exchange.needsRefill(true).then(function (changed) {
-                if (changed) {
-                    // send email or do whatever else if it needs refill
-                    return mailer.sendMailToAdmins('Refill', 'Exchange needs to be refilled.');
+                if (!changed) {
+                    return;
                 }
+                // send email or do whatever else if it needs refill
+                return mailer.sendMailToAdmins('Refill', 'Exchange needs to be refilled.');
             });
         } else {
-            return exchange.needsRefill(false);
+            return exchange.noDrainNoRefill();
         } 
     });
 };

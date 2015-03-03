@@ -14,9 +14,9 @@ var get = function (req, res, next) {
 };
 
 var updateThresholds = function (req, res, next) {
-    return exchange.updateTresholds(req.body.refill, req.body.drain).then(function (exchange) {
+    return exchange.updateThresholds(req.body.refill, req.body.drain).then(function (exchange) {
         res.send(200, exchange);
-    }, error(res).done());
+    }, error(res)).done();
 };
 
 module.exports = {

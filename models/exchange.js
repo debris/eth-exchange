@@ -33,6 +33,10 @@ var Exchange = new mongoose.Schema({
     needsRefill: {
         type: Boolean,
         default: false
+    },
+    needsDrain: {
+        type: Boolean,
+        default: false
     }
 });
 

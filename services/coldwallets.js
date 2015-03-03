@@ -16,11 +16,7 @@ var decreaseColdwalletBalance = function (address, value) {
 };
 
 var getColdwalletForDrain = function () {
-    return Q.ninvoke(Coldwallet.findOneAndUpdate({
-        $where: function () {
-            return this.expectedBalance < this.maxBalance;
-        }
-    }), 'sort', '-maxBalance');
+    return Q.ninvoke(Coldwallet.findOneAndUpdate({}).$where("this.expectedBalance < this.maxBalance").sort('-maxBalance'), 'exec');
 };
 
 module.exports = {
