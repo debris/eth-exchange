@@ -26,9 +26,9 @@ var findOrCreateExchange = function () {
             console.log('waiting for the block to be mined');
 
             var deferred = Q.defer();
-            var watch = web3.eth.watch('pending');
+            var watch = web3.eth.filter('pending');
             var counter = 0;
-            watch.changed(function (res) {
+            watch.watch(function (res) {
                 if (++counter > 1) {
                     deferred.resolve(exchange);
                     watch.uninstall();

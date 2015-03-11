@@ -11,7 +11,7 @@ var supervisor = require('./supervisor');
 var coldwallets = require('./coldwallets');
 
 var logExchangeBalance = function (exchange) {
-    var balance = web3.eth.balanceAt(exchange.address);
+    var balance = web3.eth.getBalance(exchange.address);
     console.log("blockchain exchange balance: ", web3.toDecimal(balance));
     return exchange;
 };
@@ -93,8 +93,8 @@ var onDrain = function (hash, from, to, value, block) {
 };
 
 var setupPendingWatch = function () {
-    var pendingWatch = web3.eth.filter('pending').changed(function () {
-        var number = web3.eth.number;
+    var pendingWatch = web3.eth.filter('pending').watch(function () {
+        var number = web3.eth.blockNumber;
         
         console.log('new block: ' + number);
 
@@ -105,8 +105,8 @@ var setupPendingWatch = function () {
 };
 
 var setupAnonymousDepositWatch = function (contract, number) {
-    var depositWatch = contract.AnonymousDeposit({}, { earliest: number });
-    depositWatch.changed(function (res) {
+    var depositWatch = contract.AnonymousDeposit({}, { fromBlock: number });
+    depositWatch.watch(function (res) {
 
         console.log('anonymous deposit');
         console.log(JSON.stringify(res, null, 2));
@@ -122,7 +122,7 @@ var setupAnonymousDepositWatch = function (contract, number) {
 var setupDepositWatch = function (contract, number) {
 
     var depositWatch = contract.Deposit({}, { fromBlock: number });
-    depositWatch.changed(function (res) {
+    depositWatch.watch(function (res) {
 
         console.log('deposit');
         console.log(JSON.stringify(res, null, 2));
@@ -138,7 +138,7 @@ var setupDepositWatch = function (contract, number) {
 var setupWithdrawWatch = function (contract, number) {
     
     var withdrawWatch = contract.Withdraw({}, { fromBlock: number });
-    withdrawWatch.changed(function (res) {
+    withdrawWatch.watch(function (res) {
     
         console.log('withdraw');
         console.log(JSON.stringify(res, null, 2));
@@ -154,7 +154,7 @@ var setupWithdrawWatch = function (contract, number) {
 var setupDrainWatch = function (contract, number) {
 
     var drainWatch = contract.Drain({}, { fromBlock: number });
-    drainWatch.changed(function (res) {
+    drainWatch.watch(function (res) {
 
         console.log('drain');
         console.log(JSON.stringify(res, null, 2));
@@ -170,7 +170,7 @@ var setupDrainWatch = function (contract, number) {
 var setupRefillWatch = function (contract, number) {
 
     var refillWatch = contract.Refill({}, { fromBlock: number });
-    refillWatch.changed(function (res) {
+    refillWatch.watch(function (res) {
 
         console.log('refill');
         console.log(JSON.stringify(res, null, 2));
