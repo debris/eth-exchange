@@ -93,7 +93,7 @@ var onDrain = function (hash, from, to, value, block) {
 };
 
 var setupPendingWatch = function () {
-    var pendingWatch = web3.eth.watch('pending').changed(function () {
+    var pendingWatch = web3.eth.filter('pending').changed(function () {
         var number = web3.eth.number;
         
         console.log('new block: ' + number);
@@ -121,7 +121,7 @@ var setupAnonymousDepositWatch = function (contract, number) {
 
 var setupDepositWatch = function (contract, number) {
 
-    var depositWatch = contract.Deposit({}, { earliest: number });
+    var depositWatch = contract.Deposit({}, { fromBlock: number });
     depositWatch.changed(function (res) {
 
         console.log('deposit');
@@ -137,7 +137,7 @@ var setupDepositWatch = function (contract, number) {
 
 var setupWithdrawWatch = function (contract, number) {
     
-    var withdrawWatch = contract.Withdraw({}, { earliest: number });
+    var withdrawWatch = contract.Withdraw({}, { fromBlock: number });
     withdrawWatch.changed(function (res) {
     
         console.log('withdraw');
@@ -153,7 +153,7 @@ var setupWithdrawWatch = function (contract, number) {
 
 var setupDrainWatch = function (contract, number) {
 
-    var drainWatch = contract.Drain({}, { earliest: number });
+    var drainWatch = contract.Drain({}, { fromBlock: number });
     drainWatch.changed(function (res) {
 
         console.log('drain');
@@ -169,7 +169,7 @@ var setupDrainWatch = function (contract, number) {
 
 var setupRefillWatch = function (contract, number) {
 
-    var refillWatch = contract.Refill({}, { earliest: number });
+    var refillWatch = contract.Refill({}, { fromBlock: number });
     refillWatch.changed(function (res) {
 
         console.log('refill');

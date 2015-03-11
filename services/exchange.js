@@ -42,7 +42,7 @@ var findOrCreateExchange = function () {
 var verifyExchange = function (exchange) {
     console.log('exchange address: ' + exchange.address);
 
-    var code = web3.eth.codeAt(exchange.address);
+    var code = web3.eth.getData(exchange.address);
     console.log('exchange code: ' + code); 
     
     if (code === '0x0000000000000000000000000000000000000000000000000000000000000000') {
