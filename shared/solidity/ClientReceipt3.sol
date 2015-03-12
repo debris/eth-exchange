@@ -1,33 +1,4 @@
 import "owned";
-contract lockedbox is owned {
-  event NomineesChanged(address keyholder, address executive);
-  event BoxOpened();
-  function nominate(address _keyholder, address _executive) {
-	keyholder = _keyholder;
-	executive = _executive;
-	NomineesChanged(keyholder, executive);
-  }
-  function open() {
-	if (msg.sender == keyholder) {
-	  openSince = block.number;
-	  BoxOpened();
-	}
-  }
-  modifier restricted {
-	// open for 256 blocks.
-	if (openSince + 256 < block.number) {
-	  openSince = 0;
-	}
-	if (msg.sender == owner || (msg.sender == executive && openSince > 0)) {
-	  _
-	  openSince = 0;
-	}
-  }
-							
-  uint openSince;
-  address keyholder;
-  address executive;
-}
 
 contract killswitch is owned {
   event NomineesChanged(address keyholder, address executive);
