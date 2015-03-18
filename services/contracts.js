@@ -35,11 +35,11 @@ var loadInterface = function (name) {
 }
 
 var compile = function (code) {
-    return web3.eth.solidity(code);
+    return web3.eth.compile.solidity(code);
 };
 
 var create = function (compiledCode) {
-    return web3.eth.transact({data: compiledCode});
+    return web3.eth.sendTransaction({data: compiledCode});
 };
 
 var createNewContract = function (name) {
@@ -50,7 +50,8 @@ var createNewContract = function (name) {
 
 var getInterface = function (address, name) {
     return loadInterface(name).then(function (interface) {
-        return web3.eth.contract(address, interface);
+        var Contract = web3.eth.contract(interface);
+        return new Contract(address);
     });
 };
 
