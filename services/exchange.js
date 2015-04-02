@@ -26,7 +26,7 @@ var findOrCreateExchange = function () {
             console.log('waiting for the block to be mined');
 
             var deferred = Q.defer();
-            var watch = web3.eth.filter('pending');
+            var watch = web3.eth.filter('latest');
             var counter = 0;
             watch.watch(function (res) {
                 if (++counter > 1) {
@@ -42,7 +42,7 @@ var findOrCreateExchange = function () {
 var verifyExchange = function (exchange) {
     console.log('exchange address: ' + exchange.address);
 
-    var code = web3.eth.getData(exchange.address);
+    var code = web3.eth.getCode(exchange.address);
     console.log('exchange code: ' + code); 
     
     if (code === '0x0000000000000000000000000000000000000000000000000000000000000000') {

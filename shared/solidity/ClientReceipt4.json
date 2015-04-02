@@ -1,0 +1,191 @@
+[
+   {
+      "constant" : false,
+      "inputs" : [],
+      "name" : "close",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_keyholder",
+            "type" : "address"
+         },
+         {
+            "name" : "_executive",
+            "type" : "address"
+         }
+      ],
+      "name" : "nominate",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [],
+      "name" : "refill",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_to",
+            "type" : "address"
+         },
+         {
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "transfer",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [
+         {
+            "name" : "_id",
+            "type" : "bytes32"
+         }
+      ],
+      "name" : "deposit",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "constant" : false,
+      "inputs" : [],
+      "name" : "open",
+      "outputs" : [],
+      "type" : "function"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "AnonymousDeposit",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_id",
+            "type" : "bytes32"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Deposit",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Refill",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "_from",
+            "type" : "address"
+         },
+         {
+            "indexed" : true,
+            "name" : "_to",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "_value",
+            "type" : "uint256"
+         }
+      ],
+      "name" : "Transfer",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [
+         {
+            "indexed" : true,
+            "name" : "odd",
+            "type" : "bool"
+         },
+         {
+            "indexed" : false,
+            "name" : "value",
+            "type" : "int256"
+         }
+      ],
+      "name" : "Test",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [
+         {
+            "indexed" : false,
+            "name" : "keyholder",
+            "type" : "address"
+         },
+         {
+            "indexed" : false,
+            "name" : "executive",
+            "type" : "address"
+         }
+      ],
+      "name" : "NomineesChanged",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [],
+      "name" : "BoxOpened",
+      "type" : "event"
+   },
+   {
+      "anonymous" : false,
+      "inputs" : [],
+      "name" : "BoxClosed",
+      "type" : "event"
+   }
+]

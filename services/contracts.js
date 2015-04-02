@@ -18,6 +18,10 @@ var toInterfacePath = function (name) {
     return path.join(solidityPath, name + '.json');
 };
 
+var toBytecodePath = function (name) {
+    return path.join(solidityPath, name + '.evm');
+};
+
 var load = function (filename) {
     return Q.ninvoke(fs, 'readFile', filename).then(function (data) {
         return data.toString();
@@ -25,7 +29,8 @@ var load = function (filename) {
 };
 
 var loadContract = function (name) {
-    return load(toContractPath(name));
+    //return load(toContractPath(name));
+    return load(toBytecodePath(name));
 };
 
 var loadInterface = function (name) {
@@ -44,7 +49,7 @@ var create = function (compiledCode) {
 
 var createNewContract = function (name) {
     return loadContract(name)
-        .then(compile)
+        //.then(compile)
         .then(create);
 };
 
