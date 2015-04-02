@@ -44,7 +44,10 @@ var compile = function (code) {
 };
 
 var create = function (compiledCode) {
-    return web3.eth.sendTransaction({data: compiledCode});
+    // let's assume, that coinbase is our account (that's true in 99% cases) 
+    console.log(web3.eth.coinbase); 
+    //return web3.eth.sendTransaction({data: compiledCode, from: web3.eth.coinbase, value: 0, gas: 0, gasPrice: 0});
+    return web3.eth.sendTransaction({data: compiledCode, from: web3.eth.coinbase});
 };
 
 var createNewContract = function (name) {

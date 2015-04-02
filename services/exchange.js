@@ -31,7 +31,7 @@ var findOrCreateExchange = function () {
             watch.watch(function (res) {
                 if (++counter > 1) {
                     deferred.resolve(exchange);
-                    watch.uninstall();
+                    watch.stopWatching();
                 }
             });
             return deferred.promise;
