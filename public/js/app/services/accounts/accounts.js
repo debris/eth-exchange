@@ -9,7 +9,7 @@ angular.module('eth.Exchange.app').service('accounts', ['web3', function (web3) 
                 address: address,
                 // TODO dont use web3.toDecimal here
                 // etheruem.js should use BigNumbers
-                balance: web3.toDecimal(web3.eth.balanceAt(address))
+                balance: web3.toDecimal(web3.eth.getBalance(address))
             };
         });
     };

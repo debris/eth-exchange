@@ -11,7 +11,7 @@ angular.module('eth.Exchange.app').controller('DepositCtrl', [
             if (!selected || !selected.address)
                 throw new Error('no address selected!');
             // TODO: dont use parseInt here, use BigNumber instead
-            if (parseInt(selected.balance) < $scope.deposit.value)
+            if (selected.balance < $scope.deposit.value)
                 throw new Error('not enought funds!');
         });
     };
@@ -25,8 +25,9 @@ angular.module('eth.Exchange.app').controller('DepositCtrl', [
         var address = arr[1].data;
         // this should be abstracted! every wallet has the same generic api!
         return contracts.getInterface().then(function (data) {
-            var contract = web3.eth.contract(address, data.data);
-            contract.transact({
+            var contract = web3.eth.contract(data.data);
+            var c = new contract(address);
+            c.sendTransaction({
                 from: $scope.deposit.selected.address,
                 value: $scope.deposit.value
             }).deposit('0x' + user.identity);

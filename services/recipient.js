@@ -92,8 +92,8 @@ var onDrain = function (hash, from, to, value, block) {
     }).done();
 };
 
-var setupPendingWatch = function () {
-    var pendingWatch = web3.eth.filter('pending').watch(function () {
+var setupLatestWatch = function () {
+    var pendingWatch = web3.eth.filter('latest').watch(function () {
         var number = web3.eth.blockNumber;
         
         console.log('new block: ' + number);
@@ -189,7 +189,9 @@ var setupWatches = function () {
         var bl = arr[1];
 
         var number = Math.max(bl.number - 3, 0);
-        setupPendingWatch();
+
+        console.log('setting up watches!');
+        setupLatestWatch();
         setupAnonymousDepositWatch(contract, number);
         setupDepositWatch(contract, number);
         setupWithdrawWatch(contract, number);
